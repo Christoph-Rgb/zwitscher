@@ -1,0 +1,36 @@
+{{> welcomemenu }}
+
+<section class="ui raised segment">
+    <div class="ui grid">
+        <aside class="ui five wide column">
+          <img src="images/twitter_256_256.png" class="ui medium image">
+        </aside>
+        <div class="ui ten wide column">
+            <div class="ui stacked fluid form segment">
+                <form action="/register" method="POST">
+                    <h3 class="ui header">Register</h3>
+                    <div class="two fields">
+                        <div class="field">
+                            <label>First Name</label>
+                            <input placeholder="First Name" type="text" name="firstName">
+                        </div>
+                        <div class="field">
+                            <label>Last Name</label>
+                            <input placeholder="Last Name" type="text" name="lastName">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Email</label>
+                        <input placeholder="Email" type="text" name="email">
+                    </div>
+                    <div class="field">
+                        <label>Password</label>
+                        <input placeholder="Password" type="password" name="password">
+                    </div>
+                    <button class="ui blue submit button">Submit</button>
+                </form>
+                {{> formerror}}
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,22 @@
+<nav class="ui blue inverted menu">
+    <header class="header item"> <a href="/"> Zwitscher </a> </header>
+    <div class="right menu">
+
+      <div class="item">
+        <form id="loginForm" class="ui mini form" action="/login" method="POST">
+          <div class="two fields">
+            <input placeholder="Email" type="text" name="email">
+            <input placeholder="Password" type="password" name="password">
+          </div>
+        </form>
+      </div>
+
+        <a class="item" onclick="login()">  Login</a>
+        <a class="item" href="/signup"> Signup</a>
+    </div>
+</nav>
+<script>
+  function login() {
+    document.getElementById('loginForm').submit();
+  }
+</script>

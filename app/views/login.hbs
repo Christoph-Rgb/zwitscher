@@ -1,0 +1,24 @@
+{{> welcomemenu }}
+
+<section class="ui raised segment">
+    <div class="ui grid">
+        <aside class="ui six wide column">
+            <img src="images/twitter_256_256.png" class="ui medium image">
+        </aside>
+        <div class="ui ten wide column fluid form">
+            <div class="ui stacked segment">
+                <form action="/login" method="POST">
+                    <h3 class="ui header">Log-in</h3>
+                    <div class="field">
+                        <label>Email</label> <input placeholder="Email" type="text" name="email">
+                    </div>
+                    <div class="field">
+                        <label>Password</label> <input placeholder="Password" type="password" name="password">
+                    </div>
+                    <button class="ui blue submit button">Login</button>
+                </form>
+                {{> formerror}}
+            </div>
+        </div>
+    </div>
+</section>
