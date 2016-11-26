@@ -2,6 +2,12 @@
   "users": {
     "_model": "User",
     "homer": {
+      "firstName": "Christoph",
+      "lastName": "Schwägerl",
+      "email": "cs@cs.de",
+      "password": "cs"
+    },
+    "homer": {
       "firstName": "Homer",
       "lastName": "Simpson",
       "email": "homer@simpson.com",

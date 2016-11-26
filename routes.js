@@ -1,4 +1,5 @@
 const Accounts = require('./app/controllers/accounts');
+const Home = require('./app/controllers/home');
 const Assets = require('./app/controllers/assets');
 
 module.exports = [
@@ -15,6 +16,8 @@ module.exports = [
 
   { method: 'GET', path: '/settings', config: Accounts.viewSettings },
   { method: 'POST', path: '/settings', config: Accounts.updateSettings },
+
+  { method: 'GET', path: '/home', config: Home.home },
 
   {
     method: 'GET',

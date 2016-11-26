@@ -6,8 +6,9 @@
           <img src="images/twitter_256_256.png" class="ui medium image">
         </aside>
         <div class="ui ten wide column">
-            <div class="ui stacked fluid form segment">
-                <form action="/register" method="POST">
+            <!--<div class="ui stacked fluid form segment">-->
+            <div class="ui form stacked fluid form segment">
+                <form id="signupForm" action="/register" method="POST">
                     <h3 class="ui header">Register</h3>
                     <div class="two fields">
                         <div class="field">
@@ -24,8 +25,11 @@
                         <input placeholder="Email" type="text" name="email">
                     </div>
                     <div class="field">
-                        <label>Password</label>
-                        <input placeholder="Password" type="password" name="password">
+                      <label>Password</label>
+                      <div class="two fields">
+                        <input id="password" placeholder="Password" type="password" name="password">
+                        <input id="passwordConfirm" placeholder="Confirm Password" type="password" name="passwordConfirm">
+                      </div>
                     </div>
                     <button class="ui blue submit button">Submit</button>
                 </form>
@@ -34,3 +38,60 @@
         </div>
     </div>
 </section>
+
+<!--<script>-->
+  <!--$('form').form({-->
+    <!--fields: {-->
+      <!--firstName: {-->
+        <!--identifier: 'firstName',-->
+        <!--rules: [-->
+          <!--{-->
+            <!--type: 'empty',-->
+            <!--prompt: 'First name can not be empty'-->
+          <!--}-->
+        <!--]-->
+      <!--},-->
+      <!--lastName: {-->
+        <!--identifier: 'lastName',-->
+        <!--rules: [-->
+          <!--{-->
+            <!--type: 'empty',-->
+            <!--prompt: 'Last name can not be empty'-->
+          <!--}-->
+        <!--]-->
+      <!--},-->
+      <!--email: {-->
+        <!--identifier: 'email',-->
+        <!--rules: [-->
+          <!--{-->
+            <!--type: 'email',-->
+            <!--prompt: 'Invalid email address'-->
+          <!--}-->
+        <!--]-->
+      <!--},-->
+      <!--password: {-->
+        <!--identifier: 'password',-->
+        <!--rules: [-->
+          <!--{-->
+            <!--type: 'length[' + 6 + ']',-->
+            <!--prompt: 'Password must be at least 6 characters in length'-->
+          <!--}-->
+        <!--]-->
+      <!--},-->
+      <!--passwordConfirm: {-->
+        <!--identifier: 'passwordConfirm',-->
+        <!--rules: [-->
+          <!--{-->
+            <!--type: 'match[password]',-->
+            <!--prompt: 'Mismatched password'-->
+          <!--}-->
+        <!--]-->
+      <!--},-->
+    <!--},-->
+    <!--inline: true,-->
+    <!--onSuccess: function(e) {-->
+<!--//      document.getElementById('loginForm').submit();-->
+      <!--return true;-->
+    <!--}-->
+  <!--});-->
+<!--</script>-->

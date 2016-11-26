@@ -20,10 +20,17 @@
                         <label>Email</label>
                         <input placeholder="Email" type="text" name="email" value = "{{user.email}}">
                     </div>
-                    <div class="field">
-                        <label>Password</label>
-                        <input type="password" name="password" value = "{{user.password}}">
+                    <!--<div class="field">-->
+                        <!--<label>Password</label>-->
+                        <!--<input type="password" name="password" value = "{{user.password}}">-->
+                    <!--</div>-->
+                  <div class="field">
+                    <label>Password</label>
+                    <div class="two fields">
+                      <input id="password" placeholder="Password" type="password" name="password">
+                      <input id="passwordConfirm" placeholder="Confirm Password" type="password" name="passwordConfirm">
                     </div>
+                  </div>
                     <button class="ui blue submit button">Save</button>
                 </form>
                 {{> formerror}}

@@ -5,8 +5,8 @@
       <div class="item">
         <form id="loginForm" class="ui mini form" action="/login" method="POST">
           <div class="two fields">
-            <input placeholder="Email" type="text" name="email">
-            <input placeholder="Password" type="password" name="password">
+            <input id="email" placeholder="Email" type="text" name="email">
+            <input id="password" placeholder="Password" type="password" name="password">
           </div>
         </form>
       </div>
@@ -17,6 +17,14 @@
 </nav>
 <script>
   function login() {
+    const email = $('#email').val();
+    const password = $('#password').val();
+
+    if(email === '' && password === ''){
+      document.getElementById('loginForm').method = "GET";
+      console.log('set method to GET');
+    }
+
     document.getElementById('loginForm').submit();
   }
 </script>

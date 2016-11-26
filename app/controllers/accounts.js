@@ -6,7 +6,7 @@ const Joi = require('joi');
 exports.main = {
   auth: false,
   handler: function (request, reply) {
-    reply.view('main', { title: 'Welcome to Donations' });
+    reply.view('main', { title: 'Welcome to Zwitscher' });
   },
 
 };
@@ -87,7 +87,10 @@ exports.register = {
       firstName: Joi.string().required(),
       lastName: Joi.string().required(),
       email: Joi.string().email().required(),
-      password: Joi.string().required(),
+
+      //TODO: change to min 6
+      password: Joi.string().min(1).max(15).required(),
+      passwordConfirm: Joi.any().valid(Joi.ref('password')).required().options({ language: { any: { allowOnly: 'must match password' } } }),
     },
 
     failAction: function (request, reply, source, error) {
@@ -136,7 +139,10 @@ exports.updateSettings = {
       firstName: Joi.string().required(),
       lastName: Joi.string().required(),
       email: Joi.string().email().required(),
-      password: Joi.string().required(),
+
+      //TODO: change to min 6
+      password: Joi.string().min(1).max(15).required(),
+      passwordConfirm: Joi.any().valid(Joi.ref('password')).required().options({ language: { any: { allowOnly: 'must match password' } } }),
     },
 
     failAction: function (request, reply, source, error) {
