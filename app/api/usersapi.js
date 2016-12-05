@@ -79,6 +79,7 @@ exports.deleteAll = {
 
   auth: {
     strategy: 'jwt',
+    scope: 'admin',
   },
 
   handler: function (request, reply) {

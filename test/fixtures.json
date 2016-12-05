@@ -5,19 +5,22 @@
       "firstName": "Homer",
       "lastName": "Simpson",
       "email": "homer@simpson.com",
-      "password": "secret"
+      "password": "secret",
+      "scope": "admin"
     },
     {
       "firstName": "Marge",
       "lastName": "Simpson",
       "email": "marge@simpson.com",
-      "password": "secret"
+      "password": "secret",
+      "scope": "user"
     },
     {
       "firstName": "Bart",
       "lastName": "Simpson",
       "email": "bart@simpson.com",
-      "password": "secret"
+      "password": "secret",
+      "scope": "user"
     }
   ],
   "candidates": [

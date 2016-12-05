@@ -14,11 +14,11 @@ suite('User API tests', function () {
 
   beforeEach(function () {
     zwitscherService.login(users[0]);
-    //zwitscherService.deleteAllUsers();
+    // zwitscherService.deleteAllUsers();
   });
 
   afterEach(function () {
-    //zwitscherService.deleteAllUsers();
+    // zwitscherService.deleteAllUsers();
     zwitscherService.logout();
   });
 
@@ -57,16 +57,16 @@ suite('User API tests', function () {
   //   assert.equal(allUsers.length, users.length);
   // });
 
-  test('get users detail', function () {
-    for (let u of users) {
-      zwitscherService.createUser(u);
-    }
-
-    const allUsers = zwitscherService.getUsers();
-    for (var i = 0; i < users.length; i++) {
-      assert(_.some([allUsers[i]], users[i]), 'returnedUser must be a superset of newUser');
-    }
-  });
+  // test('get users detail', function () {
+  //   for (let u of users) {
+  //     zwitscherService.createUser(u);
+  //   }
+  //
+  //   const allUsers = zwitscherService.getUsers();
+  //   for (var i = 0; i < users.length; i++) {
+  //     assert(_.some([allUsers[i]], users[i]), 'returnedUser must be a superset of newUser');
+  //   }
+  // });
 
   // test('get all users empty', function () {
   //   const allUsers = zwitscherService.getUsers();

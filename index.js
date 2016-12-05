@@ -46,7 +46,7 @@ server.register([require('inert'), require('vision'), require('hapi-auth-cookie'
   });
 
   server.route(require('./routes'));
-  // server.route(require('./_routesapi'));
+  server.route(require('./routesapi'));
 
   server.start((err) => {
     if (err) {

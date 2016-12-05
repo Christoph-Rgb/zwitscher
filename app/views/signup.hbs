@@ -2,8 +2,8 @@
 
 <section class="ui raised segment">
     <div class="ui grid">
-        <aside class="ui five wide column">
-          <img src="images/twitter_256_256.png" class="ui medium image">
+        <aside class="ui six wide column">
+          <img src="images/zwitscherIcons/zwitscher_512_512.png" class="ui medium image">
         </aside>
         <div class="ui ten wide column">
             <!--<div class="ui stacked fluid form segment">-->
@@ -27,71 +27,18 @@
                     <div class="field">
                       <label>Password</label>
                       <div class="two fields">
-                        <input id="password" placeholder="Password" type="password" name="password">
-                        <input id="passwordConfirm" placeholder="Confirm Password" type="password" name="passwordConfirm">
+                        <div class="field">
+                          <input id="password" placeholder="Password" type="password" name="password">
+                        </div>
+                        <div class="field">
+                          <input id="passwordConfirm" placeholder="Confirm Password" type="password" name="passwordConfirm">
+                        </div>
                       </div>
                     </div>
-                    <button class="ui blue submit button">Submit</button>
+                    <button class="ui brown submit button">Signup</button>
                 </form>
                 {{> formerror}}
             </div>
         </div>
     </div>
 </section>
-
-<!--<script>-->
-  <!--$('form').form({-->
-    <!--fields: {-->
-      <!--firstName: {-->
-        <!--identifier: 'firstName',-->
-        <!--rules: [-->
-          <!--{-->
-            <!--type: 'empty',-->
-            <!--prompt: 'First name can not be empty'-->
-          <!--}-->
-        <!--]-->
-      <!--},-->
-      <!--lastName: {-->
-        <!--identifier: 'lastName',-->
-        <!--rules: [-->
-          <!--{-->
-            <!--type: 'empty',-->
-            <!--prompt: 'Last name can not be empty'-->
-          <!--}-->
-        <!--]-->
-      <!--},-->
-      <!--email: {-->
-        <!--identifier: 'email',-->
-        <!--rules: [-->
-          <!--{-->
-            <!--type: 'email',-->
-            <!--prompt: 'Invalid email address'-->
-          <!--}-->
-        <!--]-->
-      <!--},-->
-      <!--password: {-->
-        <!--identifier: 'password',-->
-        <!--rules: [-->
-          <!--{-->
-            <!--type: 'length[' + 6 + ']',-->
-            <!--prompt: 'Password must be at least 6 characters in length'-->
-          <!--}-->
-        <!--]-->
-      <!--},-->
-      <!--passwordConfirm: {-->
-        <!--identifier: 'passwordConfirm',-->
-        <!--rules: [-->
-          <!--{-->
-            <!--type: 'match[password]',-->
-            <!--prompt: 'Mismatched password'-->
-          <!--}-->
-        <!--]-->
-      <!--},-->
-    <!--},-->
-    <!--inline: true,-->
-    <!--onSuccess: function(e) {-->
-<!--//      document.getElementById('loginForm').submit();-->
-      <!--return true;-->
-    <!--}-->
-  <!--});-->
-<!--</script>-->

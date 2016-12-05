@@ -9,26 +9,26 @@ class ZwitscherService {
     this.httpService = new SyncHttpService(baseUrl);
   }
 
-  // getUsers() {
-  //   return this.httpService.get('/api/users');
-  // }
-  //
-  // getUser(id) {
-  //   return this.httpService.get('/api/users/' + id);
-  // }
-  //
-  // createUser(newUser) {
-  //   return this.httpService.post('/api/users', newUser);
-  // }
-  //
-  // deleteAllUsers() {
-  //   return this.httpService.delete('/api/users');
-  // }
-  //
-  // deleteOneUser(id) {
-  //   return this.httpService.delete('/api/users/' + id);
-  // }
-  //
+  getUsers() {
+    return this.httpService.get('/api/users');
+  }
+
+  getUser(id) {
+    return this.httpService.get('/api/users/' + id);
+  }
+
+  createUser(newUser) {
+    return this.httpService.post('/api/users', newUser);
+  }
+
+  deleteAllUsers() {
+    return this.httpService.delete('/api/users');
+  }
+
+  deleteOneUser(id) {
+    return this.httpService.delete('/api/users/' + id);
+  }
+
   // makeDonation(id, donation) {
   //   return this.httpService.post('/api/candidates/' + id + '/donations', donation);
   // }
