@@ -1,13 +1,56 @@
 {{> mainmenu _id="home" }}
 
-<section class="ui raised segment">
+<section class="ui centered stackable grid">
 
-    <!--timeline partial here-->
-
-    <div class="ui  divider"></div>
-
-    <div class="ui teal progress" data-percent="${progress}" id="mainprogress">
-        <div class="bar"></div>
+  <div class="ui eleven wide stacked column">
+    <div class="ui stackable two cards">
+    {{#each tweets}}
+        <div class="ui raised fluid card">
+          <div class="extra content">
+            <div class="left floated author">
+              <img class="ui avatar image" src="{{user.profilePicture}}"> {{user.firstName}} {{user.lastName}}
+            </div>
+            <div class="right floated">
+              posted on {{postedString}}
+            </div>
+          </div>
+          <div class="content">
+            <div class="description">
+              <p>{{message}}</p>
+            </div>
+          </div>
+        </div>
+    {{/each}}
     </div>
+  </div>
+
+  <div class="ui four wide column">
+    <div class="ui card">
+      <div class="image">
+        <img src="{{user.profilePicture}}">
+      </div>
+      <div class="content">
+        <div class="header">{{user.firstName}} {{user.lastName}}</div>
+        <!--<div class="meta">-->
+          <!--<a>Friends</a>-->
+        <!--</div>-->
+        <!--<div class="description">-->
+          <!--Matthew is an interior designer living in New York.-->
+        <!--</div>-->
+        <div class="description">
+          joined {{user.joinedString}}
+        </div>
+      </div>
+      <!--<div class="extra content">-->
+        <!--<span class="right floated">-->
+          <!--joined {{user.joined}}-->
+        <!--</span>-->
+        <!--<span>-->
+          <!--<i class="user icon"></i>-->
+          <!--75 Friends-->
+        <!--</span>-->
+      <!--</div>-->
+    </div>
+  </div>
 
 </section>

@@ -8,6 +8,7 @@
       "password": "secret",
       "gender": "M",
       "profilePicture": "images/profilePictures/male2.jpg",
+      "joined": "2016-12-05",
       "scope": "admin"
     },
     {
@@ -17,6 +18,7 @@
       "password": "secret",
       "gender": "F",
       "profilePicture": "images/profilePictures/female1.jpg",
+      "joined": "2016-12-05",
       "scope": "user"
     },
     {
@@ -24,8 +26,9 @@
       "lastName": "Simpson",
       "email": "bart@simpson.com",
       "password": "secret",
-      "gender": "F",
+      "gender": "M",
       "profilePicture": "images/profilePictures/male1.jpg",
+      "joined": "2016-12-05",
       "scope": "user"
     }
   ],
@@ -34,6 +37,10 @@
     "firstName": "Maggie",
     "lastName": "Simpson",
     "email": "maggie@simpson.com",
-    "password": "secret"
+    "password": "secret",
+    "gender": "F",
+    "profilePicture": "images/profilePictures/female2.jpg",
+    "joined": "2016-12-05",
+    "scope": "user"
   }
 }

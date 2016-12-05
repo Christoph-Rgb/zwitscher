@@ -9,6 +9,7 @@ const userSchema = mongoose.Schema({
   password: String,
   profilePicture: String,
   gender: String,
+  joined: Date,
   scope: String,
 });
 

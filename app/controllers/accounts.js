@@ -56,7 +56,8 @@ exports.authenticate = {
       if (foundUser && foundUser.password === user.password) {
         request.cookieAuth.set({
           loggedIn: true,
-          loggedInUser: user.email,
+          loggedInUser: foundUser._id,
+          scope: foundUser.scope,
         });
         reply.redirect('/home');
       } else {

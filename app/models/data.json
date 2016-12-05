@@ -8,6 +8,7 @@
       "password": "cs",
       "gender": "M",
       "profilePicture": "images/profilePictures/male1.jpg",
+      "joined": "2016-12-05",
       "scope": "user"
     },
     "homer": {
@@ -17,6 +18,7 @@
       "password": "secret",
       "gender": "M",
       "profilePicture": "images/profilePictures/male2.jpg",
+      "joined": "2016-12-05",
       "scope": "admin"
     },
     "marge": {
@@ -26,6 +28,7 @@
       "password": "secret",
       "gender": "F",
       "profilePicture": "images/profilePictures/female1.jpg",
+      "joined": "2016-12-05",
       "scope": "user"
     },
     "bart": {
@@ -33,9 +36,34 @@
       "lastName": "Simpson",
       "email": "bart@simpson.com",
       "password": "secret",
-      "gender": "F",
+      "gender": "M",
       "profilePicture": "images/profilePictures/male1.jpg",
+      "joined": "2016-12-05",
       "scope": "user"
     }
-  }
+  },
+
+  "tweets": {
+    "_model": "Tweet",
+    "tweetChristoph1": {
+        "user": "->users.christoph",
+        "message": "hello zwitscher",
+        "posted": "2016-12-05"
+      },
+    "tweetChristoph2": {
+        "user": "->users.christoph",
+        "message": "this is my second tweet",
+        "posted": "2016-12-05"
+      },
+    "tweetHomer1": {
+        "user": "->users.homer",
+        "message": "get me some doughnuts",
+        "posted": "2016-12-05"
+      },
+    "tweetBart1": {
+        "user": "->users.bart",
+        "message": "aicaramba!",
+        "posted": "2016-12-05"
+      }
+    }
 }
