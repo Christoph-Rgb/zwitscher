@@ -6,6 +6,8 @@
       "lastName": "Schwägerl",
       "email": "cs@cs.de",
       "password": "cs",
+      "gender": "M",
+      "profilePicture": "images/profilePictures/male1.jpg",
       "scope": "user"
     },
     "homer": {
@@ -13,6 +15,8 @@
       "lastName": "Simpson",
       "email": "homer@simpson.com",
       "password": "secret",
+      "gender": "M",
+      "profilePicture": "images/profilePictures/male2.jpg",
       "scope": "admin"
     },
     "marge": {
@@ -20,6 +24,8 @@
       "lastName": "Simpson",
       "email": "marge@simpson.com",
       "password": "secret",
+      "gender": "F",
+      "profilePicture": "images/profilePictures/female1.jpg",
       "scope": "user"
     },
     "bart": {
@@ -27,6 +33,8 @@
       "lastName": "Simpson",
       "email": "bart@simpson.com",
       "password": "secret",
+      "gender": "F",
+      "profilePicture": "images/profilePictures/male1.jpg",
       "scope": "user"
     }
   }

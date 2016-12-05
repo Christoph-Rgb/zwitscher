@@ -6,6 +6,8 @@
       "lastName": "Simpson",
       "email": "homer@simpson.com",
       "password": "secret",
+      "gender": "M",
+      "profilePicture": "images/profilePictures/male2.jpg",
       "scope": "admin"
     },
     {
@@ -13,6 +15,8 @@
       "lastName": "Simpson",
       "email": "marge@simpson.com",
       "password": "secret",
+      "gender": "F",
+      "profilePicture": "images/profilePictures/female1.jpg",
       "scope": "user"
     },
     {
@@ -20,44 +24,16 @@
       "lastName": "Simpson",
       "email": "bart@simpson.com",
       "password": "secret",
+      "gender": "F",
+      "profilePicture": "images/profilePictures/male1.jpg",
       "scope": "user"
     }
   ],
-  "candidates": [
-    {
-      "firstName": "Lisa",
-      "lastName": "Simpson",
-      "office": "President"
-    },
-    {
-      "firstName": "Donald",
-      "lastName": "Simpson",
-      "office": "President"
-    }
-  ],
-  "newCandidate": {
-    "firstName": "Barnie",
-    "lastName": "Grumble",
-    "office": "President"
-  },
+
   "newUser": {
     "firstName": "Maggie",
     "lastName": "Simpson",
     "email": "maggie@simpson.com",
     "password": "secret"
-  },
-  "donations": [
-    {
-      "amount": 40,
-      "method": "paypal"
-    },
-    {
-      "amount": 90,
-      "method": "direct"
-    },
-    {
-      "amount": 430,
-      "method": "paypal"
-    }
-  ]
+  }
 }
