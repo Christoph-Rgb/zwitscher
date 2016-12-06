@@ -76,8 +76,8 @@
   "requireSemicolons": true,
   "requireShorthandArrowFunctions": true,
   "safeContextKeyword": "_this",
-  "validateLineBreaks": "LF",
-//  "validateLineBreaks": "CRLF",
+//  "validateLineBreaks": "LF",
+  "validateLineBreaks": "CRLF",
   "validateQuoteMarks": { "mark": "'", "escape": true, "ignoreJSX": true },
   "validateIndentation": 2,
   "maximumLineLength": 100
