@@ -1,16 +1,6 @@
 {
   "users": {
     "_model": "User",
-    "christoph": {
-      "firstName": "Christoph",
-      "lastName": "Schwägerl",
-      "email": "cs@cs.de",
-      "password": "cs",
-      "gender": "M",
-      "profilePicture": "images/profilePictures/male1.jpg",
-      "joined": "2016-12-05",
-      "scope": "user"
-    },
     "homer": {
       "firstName": "Homer",
       "lastName": "Simpson",
@@ -20,6 +10,16 @@
       "profilePicture": "images/profilePictures/male2.jpg",
       "joined": "2016-12-05",
       "scope": "admin"
+    },
+    "christoph": {
+      "firstName": "Christoph",
+      "lastName": "Schwägerl",
+      "email": "cs@cs.de",
+      "password": "cs",
+      "gender": "M",
+      "profilePicture": "images/profilePictures/male1.jpg",
+      "joined": "2016-12-05",
+      "scope": "user"
     },
     "marge": {
       "firstName": "Marge",

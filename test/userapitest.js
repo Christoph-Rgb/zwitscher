@@ -7,18 +7,18 @@ const _ = require('lodash');
 
 suite('User API tests', function () {
 
+  let adminUser = fixtures.users[0];
+  let user = fixtures.users[1];
   let users = fixtures.users;
   let newUser = fixtures.newUser;
 
   const zwitscherService = new ZwitscherService(fixtures.donationService);
 
   beforeEach(function () {
-    zwitscherService.login(users[0]);
-    // zwitscherService.deleteAllUsers();
+    zwitscherService.login(user);
   });
 
   afterEach(function () {
-    // zwitscherService.deleteAllUsers();
     zwitscherService.logout();
   });
 
@@ -26,19 +26,24 @@ suite('User API tests', function () {
     const returnedUser = zwitscherService.createUser(newUser);
     assert(_.some([returnedUser], newUser), 'returnedUser must be a superset of newUser');
     assert.isDefined(returnedUser._id);
+
+    zwitscherService.deleteOneUser(returnedUser._id);
+
   });
 
   test('get user', function () {
-    const u1 = zwitscherService.createUser(newUser);
-    const u2 = zwitscherService.getUser(u1._id);
-    assert.deepEqual(u1, u2);
+    const user1 = zwitscherService.createUser(newUser);
+    const user2 = zwitscherService.getUser(user1._id);
+    assert.deepEqual(user1, user2);
+
+    zwitscherService.deleteOneUser(user1._id);
   });
 
   test('get invalid user', function () {
-    const u1 = zwitscherService.getUser('1234');
-    assert.isNull(u1);
-    const u2 = zwitscherService.getUser('012345678901234567890123');
-    assert.isNull(u2);
+    const user1 = zwitscherService.getUser('1234');
+    assert.isNull(user1);
+    const user2 = zwitscherService.getUser('012345678901234567890123');
+    assert.isNull(user2);
   });
 
   test('delete a user', function () {
@@ -48,28 +53,15 @@ suite('User API tests', function () {
     assert(zwitscherService.getUser(u._id) == null);
   });
 
-  // test('get all users', function () {
-  //   for (let u of users) {
-  //     zwitscherService.createUser(u);
-  //   }
-  //
-  //   const allUsers = zwitscherService.getUsers();
-  //   assert.equal(allUsers.length, users.length);
-  // });
+  test('get all users', function () {
+    const allUsers = zwitscherService.getUsers();
+    assert.equal(allUsers.length, users.length);
+  });
 
-  // test('get users detail', function () {
-  //   for (let u of users) {
-  //     zwitscherService.createUser(u);
-  //   }
-  //
-  //   const allUsers = zwitscherService.getUsers();
-  //   for (var i = 0; i < users.length; i++) {
-  //     assert(_.some([allUsers[i]], users[i]), 'returnedUser must be a superset of newUser');
-  //   }
-  // });
-
-  // test('get all users empty', function () {
-  //   const allUsers = zwitscherService.getUsers();
-  //   assert.equal(allUsers.length, 0);
-  // });
+  test('get user detail', function () {
+    const allUsers = zwitscherService.getUsers();
+    for (var i = 0; i < users.length; i++) {
+      assert(_.some([allUsers[i]], users[i]), 'returnedUser must be a superset of newUser');
+    }
+  });
 });

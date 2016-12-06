@@ -4,7 +4,7 @@ const User = require('../models/user');
 const Boom = require('boom');
 const utils = require('./utils.js');
 
-exports.authenticate = {
+exports.authenticateUser = {
   auth: false,
   handler: function (request, reply) {
     const user = request.payload;
@@ -22,7 +22,7 @@ exports.authenticate = {
 
 };
 
-exports.find = {
+exports.findAllUsers = {
 
   auth: {
     strategy: 'jwt',
@@ -38,7 +38,7 @@ exports.find = {
 
 };
 
-exports.findOne = {
+exports.findOneUser = {
 
   auth: {
     strategy: 'jwt',
@@ -58,7 +58,7 @@ exports.findOne = {
 
 };
 
-exports.create = {
+exports.createUser = {
 
   auth: {
     strategy: 'jwt',
@@ -75,7 +75,7 @@ exports.create = {
 
 };
 
-exports.deleteAll = {
+exports.deleteAllUsers = {
 
   auth: {
     strategy: 'jwt',
@@ -92,7 +92,7 @@ exports.deleteAll = {
 
 };
 
-exports.deleteOne = {
+exports.deleteOneUser = {
 
   auth: {
     strategy: 'jwt',

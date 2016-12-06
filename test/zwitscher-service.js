@@ -29,21 +29,25 @@ class ZwitscherService {
     return this.httpService.delete('/api/users/' + id);
   }
 
-  // makeDonation(id, donation) {
-  //   return this.httpService.post('/api/candidates/' + id + '/donations', donation);
-  // }
-  //
-  // getDonations(id) {
-  //   return this.httpService.get('/api/candidates/' + id + '/donations');
-  // }
-  //
-  // deleteAllDonations() {
-  //   return this.httpService.delete('/api/donations');
-  // }
-  //
-  // deleteDonationsForCandidate(id) {
-  //   return this.httpService.delete('/api/candidates/' + id + '/donations');
-  // }
+  getTweet(id) {
+    return this.httpService.get('/api/tweets/' + id);
+  }
+
+  getAllTweets() {
+    return this.httpService.get('/api/tweets');
+  }
+
+  postTweet(newTweet) {
+    return this.httpService.post('/api/tweets', newTweet);
+  }
+
+  deleteOneTweet(id) {
+    return this.httpService.delete('/api/tweets/' + id);
+  }
+
+  deleteAllTweets() {
+    return this.httpService.delete('/api/tweets');
+  }
 
   login(user) {
     return this.httpService.setAuth('/api/users/authenticate', user);
