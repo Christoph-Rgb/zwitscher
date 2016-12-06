@@ -22,18 +22,18 @@ exports.userTimeline = {
 
           User.find({}).then(allUsers => {
 
-            Tweet.find({user: user._id}).sort({ posted: -1})
+            Tweet.find({ user: user._id }).sort({ posted: -1 })
                 .populate('user')
                 .then(tweets => {
 
                   tweets.forEach(tweet => {
                     tweet.postedString = tweet.posted.toLocaleString('en-GB');
-                    if(loggedInUserScope === 'admin' || tweet.user._id.equals(loggedInUserID)){
+                    if (loggedInUserScope === 'admin' || tweet.user._id.equals(loggedInUserID)) {
                       tweet.canDelete = true;
                     }
-                  })
+                  });
 
-                  reply.view('userTimeline' , {
+                  reply.view('userTimeline', {
                     title: user.firstName + 's Timeline',
                     user: user,
                     loggedInUserID: loggedInUserID,
@@ -45,7 +45,7 @@ exports.userTimeline = {
                 .catch(err => {});
           })
           .catch(err => {});
-      })
+        })
       .catch(err => {
       });
   },
@@ -64,6 +64,7 @@ exports.postTweet = {
     },
     failAction: function (request, reply, source, error) {
       const loggedInUserID = request.auth.credentials.loggedInUser;
+      const loggedInUserScope = request.auth.credentials.scope;
       const message = request.payload.message;
 
       User.findOne({ _id: loggedInUserID })
@@ -71,16 +72,16 @@ exports.postTweet = {
 
             user.joinedString = user.joined.getFullYear();
 
-            Tweet.find({user: user._id}).sort({ posted: -1})
+            Tweet.find({ user: user._id }).sort({ posted: -1 })
                 .populate('user')
                 .then(tweets => {
 
                   tweets.forEach(tweet => {
                     tweet.postedString = tweet.posted.toLocaleString('en-GB');
-                    if(loggedInUserScope === 'admin' || tweet.user._id.equals(loggedInUserID)){
+                    if (loggedInUserScope === 'admin' || tweet.user._id.equals(loggedInUserID)) {
                       tweet.canDelete = true;
                     }
-                  })
+                  });
 
                   reply.view('userTimeline', {
                     title:  user.firstName + 's Timeline',
@@ -132,13 +133,13 @@ exports.deleteTweet = {
     Tweet.findOne({ _id: tweetID })
         .then(tweet => {
 
-          if (loggedInUserScope === 'admin' || tweet.user.equals(loggedInUserID)){
+          if (loggedInUserScope === 'admin' || tweet.user.equals(loggedInUserID)) {
             tweet.remove();
           }
         })
         .catch(err => {});
 
-    reply.redirect('/userTimeline/' + viewedUserID );
+    reply.redirect('/userTimeline/' + viewedUserID);
 
   },
 
