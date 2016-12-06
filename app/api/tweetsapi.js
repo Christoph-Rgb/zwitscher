@@ -43,6 +43,27 @@ exports.findOneTweet = {
 
 };
 
+exports.findAllTweetsForUser = {
+
+  auth: {
+    strategy: 'jwt',
+    scope: ['user', 'admin'],
+  },
+
+  handler: function (request, reply) {
+    Tweet.find({ user: request.params.id }).then(tweets => {
+      if (tweets != null) {
+        reply(tweets);
+      } else{
+        reply(Boom.notFound('id not found'));
+      }
+    }).catch(err => {
+      reply(Boom.notFound('id not found'));
+    });
+  },
+
+};
+
 exports.postTweet = {
 
   auth: {
@@ -52,6 +73,8 @@ exports.postTweet = {
 
   handler: function (request, reply) {
     let tweet = new Tweet(request.payload);
+    tweet.user = request.auth.credentials.id;
+    tweet.posted = new Date();
 
     tweet.save().then(tweet => {
       reply(tweet).code(201);

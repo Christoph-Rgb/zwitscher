@@ -59,7 +59,8 @@ exports.authenticate = {
           loggedInUser: foundUser._id,
           scope: foundUser.scope,
         });
-        reply.redirect('/home');
+        // reply.redirect('/home');
+        reply.redirect('/userTimeline/' + foundUser._id);
       } else {
         reply.redirect('/signup');
       }

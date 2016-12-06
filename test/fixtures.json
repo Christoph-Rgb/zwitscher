@@ -7,7 +7,7 @@
       "email": "homer@simpson.com",
       "password": "secret",
       "gender": "M",
-      "profilePicture": "images/profilePictures/male2.jpg",
+      "profilePicture": "/images/profilePictures/male2.jpg",
       "joined": "2016-12-05T00:00:00.000Z",
       "scope": "admin"
     },
@@ -17,7 +17,7 @@
       "email": "cs@cs.de",
       "password": "cs",
       "gender": "M",
-      "profilePicture": "images/profilePictures/male1.jpg",
+      "profilePicture": "/images/profilePictures/male1.jpg",
       "joined": "2016-12-05T00:00:00.000Z",
       "scope": "user"
     },
@@ -27,7 +27,7 @@
       "email": "marge@simpson.com",
       "password": "secret",
       "gender": "F",
-      "profilePicture": "images/profilePictures/female1.jpg",
+      "profilePicture": "/images/profilePictures/female1.jpg",
       "joined": "2016-12-05T00:00:00.000Z",
       "scope": "user"
     },
@@ -37,7 +37,7 @@
       "email": "bart@simpson.com",
       "password": "secret",
       "gender": "M",
-      "profilePicture": "images/profilePictures/male1.jpg",
+      "profilePicture": "/images/profilePictures/male1.jpg",
       "joined": "2016-12-05T00:00:00.000Z",
       "scope": "user"
     }
@@ -49,32 +49,27 @@
     "email": "maggie@simpson.com",
     "password": "secret",
     "gender": "F",
-    "profilePicture": "images/profilePictures/female2.jpg",
+    "profilePicture": "/images/profilePictures/female2.jpg",
     "joined": "2016-12-05T00:00:00.000Z",
     "scope": "user"
   },
 
   "tweets": [
     {
-      "message": "hello zwitscher",
-      "posted": "2016-12-05T00:00:00.000Z"
+      "message": "hello zwitscher"
     },
     {
-      "message": "this is my second tweet",
-      "posted": "2016-12-05T00:00:00.000Z"
+      "message": "this is my second tweet"
     },
     {
-      "message": "get me some doughnuts",
-      "posted": "2016-12-05T00:00:00.000Z"
+      "message": "get me some doughnuts"
     },
     {
-      "message": "aicaramba!",
-      "posted": "2016-12-05T00:00:00.000Z"
+      "message": "aicaramba!"
     }
   ],
 
   "newTweet" : {
-    "message": "hello zwitscher",
-    "posted": "2016-12-05T00:00:00.000Z"
+    "message": "hello zwitscher"
   }
 }

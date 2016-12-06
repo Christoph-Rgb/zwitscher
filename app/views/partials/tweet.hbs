@@ -22,6 +22,7 @@
       <div class="right floated trash icon">
         <form class="ui form" action="/deleteTweet" method="post">
           <input type="hidden" name="tweetID" value="{{_id}}">
+          <input type="hidden" name="viewedUserID" value="{{user._id}}">
           <button class="ui basic brown compact icon submit button">
             <i class="trash icon"></i>
           </button>

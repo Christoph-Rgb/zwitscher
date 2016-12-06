@@ -37,6 +37,10 @@ class ZwitscherService {
     return this.httpService.get('/api/tweets');
   }
 
+  getAllTweetsForUser(id) {
+    return this.httpService.get('/api/users/' + id + '/tweets');
+  }
+
   postTweet(newTweet) {
     return this.httpService.post('/api/tweets', newTweet);
   }

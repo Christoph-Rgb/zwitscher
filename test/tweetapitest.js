@@ -99,4 +99,26 @@ suite('Tweet API tests', function () {
     assert(allTweets.length > 1);
     assert(code, 403);
   });
+
+  test('get all tweets from user', function () {
+
+    // const createdUser = zwitscherService.createUser(user);
+    // zwitscherService.logout();
+    // zwitscherService.login(createdUser);
+    //
+    // tweets.forEach(tweet => {
+    //   zwitscherService.postTweet(tweet);
+    // })
+
+    const allUsers = zwitscherService.getUsers();
+    let userID;
+    allUsers.forEach(currentUser => {
+      if (currentUser.email === user.email){
+        userID = currentUser._id;
+      }
+    })
+    const allTweets = zwitscherService.getAllTweetsForUser(userID);
+
+    assert.equal(allTweets.length, tweets.length);
+  });
 });

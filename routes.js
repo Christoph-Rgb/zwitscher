@@ -1,5 +1,6 @@
 const Accounts = require('./app/controllers/accounts');
 const Home = require('./app/controllers/home');
+const UserTimeline = require('./app/controllers/userTimeline');
 const Assets = require('./app/controllers/assets');
 
 module.exports = [
@@ -14,14 +15,11 @@ module.exports = [
 
   { method: 'GET', path: '/logout', config: Accounts.logout },
 
-  { method: 'POST', path: '/postTweet', config: Home.postTweet },
-
-  { method: 'POST', path: '/deleteTweet', config: Home.deleteTweet },
-
-  // { method: 'GET', path: '/settings', config: Accounts.viewSettings },
-  // { method: 'POST', path: '/settings', config: Accounts.updateSettings },
-
   { method: 'GET', path: '/home', config: Home.home },
+
+  { method: 'GET', path: '/userTimeline/{id}', config: UserTimeline.userTimeline },
+  { method: 'POST', path: '/postTweet', config: UserTimeline.postTweet },
+  { method: 'POST', path: '/deleteTweet', config: UserTimeline.deleteTweet },
 
   {
     method: 'GET',

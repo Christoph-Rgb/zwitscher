@@ -1,25 +1,25 @@
-<div class="ui fluid raised card">
-  <form class="ui form" action="/postTweet" method="post">
+{{#if canPost}}
   <div class="ui fluid raised card">
-    <div class="extra content">
-      <div class="left floated author">
-        <img class="ui avatar image" src="{{user.profilePicture}}"> {{user.firstName}} {{user.lastName}}
-      </div>
-      <div class="right floated">
-        <button class="ui brown submit button">Post</button>
-      </div>
-
-    </div>
-    <div class="ui content">
-      <div class="description">
-        <div class="ui fluid input">
-          <input type="text" name="message" placeholder="Share your thoughts" value="{{message}}">
+    <form class="ui form" action="/postTweet" method="post">
+    <div class="ui fluid raised card">
+      <div class="extra content">
+        <div class="left floated author">
+          <img class="ui avatar image" src="{{user.profilePicture}}"> {{user.firstName}} {{user.lastName}}
         </div>
-        {{> formerror}}
+        <div class="right floated">
+          <button class="ui brown submit button">Post</button>
+        </div>
+
+      </div>
+      <div class="ui content">
+        <div class="description">
+          <div class="ui fluid input">
+            <input type="text" name="message" placeholder="Share your thoughts" value="{{message}}">
+          </div>
+          {{> formerror}}
+        </div>
       </div>
     </div>
+    </form>
   </div>
-  </form>
-</div>
-
-
+{{/if}}
