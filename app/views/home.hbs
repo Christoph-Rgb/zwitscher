@@ -3,23 +3,10 @@
 <section class="ui centered stackable grid">
 
   <div class="ui eleven wide stacked column">
+    {{> postTweet }}
     <div class="ui stackable two cards">
     {{#each tweets}}
-        <div class="ui raised fluid card">
-          <div class="extra content">
-            <div class="left floated author">
-              <img class="ui avatar image" src="{{user.profilePicture}}"> {{user.firstName}} {{user.lastName}}
-            </div>
-            <div class="right floated">
-              posted on {{postedString}}
-            </div>
-          </div>
-          <div class="content">
-            <div class="description">
-              <p>{{message}}</p>
-            </div>
-          </div>
-        </div>
+      {{> tweet }}
     {{/each}}
     </div>
   </div>

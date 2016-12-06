@@ -1,24 +1,24 @@
 {{> welcomemenu }}
 
-<section class="ui raised segment">
-    <div class="ui grid">
-        <aside class="ui six wide column">
-            <img src="images/zwitscherIcons/zwitscher_512_512.png" class="ui medium image">
-        </aside>
-        <div class="ui ten wide column fluid form">
-            <div class="ui stacked segment">
-                <form action="/login" method="POST">
-                    <h3 class="ui header">Log-in</h3>
-                    <div class="field">
-                        <label>Email</label> <input placeholder="Email" type="text" name="email">
-                    </div>
-                    <div class="field">
-                        <label>Password</label> <input placeholder="Password" type="password" name="password">
-                    </div>
-                    <button class="ui brown submit button">Login</button>
-                </form>
-                {{> formerror}}
-            </div>
+<section class="ui basic segment">
+  <div class="ui middle aligned center aligned grid">
+    <aside class="ui six wide column">
+        <img src="images/zwitscherIcons/zwitscher_512_512.png" class="ui medium image">
+    </aside>
+    <div class="ui six wide column fluid form">
+        <div class="ui stacked segment">
+            <form action="/login" method="POST">
+                <h3 class="ui header">Log-in</h3>
+                <div class="field">
+                    <label>Email</label> <input placeholder="Email" type="text" name="email">
+                </div>
+                <div class="field">
+                    <label>Password</label> <input placeholder="Password" type="password" name="password">
+                </div>
+                <button class="ui brown submit button">Login</button>
+            </form>
+            {{> formerror}}
         </div>
     </div>
+  </div>
 </section>

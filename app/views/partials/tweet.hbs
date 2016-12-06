@@ -1,0 +1,32 @@
+<div class="ui raised fluid card">
+  <div class="extra content">
+    <div class="left floated author">
+      <img class="ui avatar image" src="{{user.profilePicture}}"> {{user.firstName}} {{user.lastName}}
+    </div>
+    <div class="right floated">
+      posted on {{postedString}}
+    </div>
+  </div>
+  {{#if imagePath}}
+    <div class="content">
+      <img class="ui fluid image" src="{{imagePath}}">
+    </div>
+  {{/if}}
+  <div class="content">
+    <div class="description">
+      <p>{{message}}</p>
+    </div>
+  </div>
+  {{#if canDelete}}
+    <div class="extra content">
+      <div class="right floated trash icon">
+        <form class="ui form" action="/deleteTweet" method="post">
+          <input type="hidden" name="tweetID" value="{{_id}}">
+          <button class="ui basic brown compact icon submit button">
+            <i class="trash icon"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  {{/if}}
+</div>

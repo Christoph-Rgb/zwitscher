@@ -14,8 +14,12 @@ module.exports = [
 
   { method: 'GET', path: '/logout', config: Accounts.logout },
 
-  { method: 'GET', path: '/settings', config: Accounts.viewSettings },
-  { method: 'POST', path: '/settings', config: Accounts.updateSettings },
+  { method: 'POST', path: '/postTweet', config: Home.postTweet },
+
+  { method: 'POST', path: '/deleteTweet', config: Home.deleteTweet },
+
+  // { method: 'GET', path: '/settings', config: Accounts.viewSettings },
+  // { method: 'POST', path: '/settings', config: Accounts.updateSettings },
 
   { method: 'GET', path: '/home', config: Home.home },
 

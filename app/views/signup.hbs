@@ -1,44 +1,44 @@
 {{> welcomemenu }}
 
-<section class="ui raised segment">
-    <div class="ui grid">
-        <aside class="ui six wide column">
-          <img src="images/zwitscherIcons/zwitscher_512_512.png" class="ui medium image">
-        </aside>
-        <div class="ui ten wide column">
-            <!--<div class="ui stacked fluid form segment">-->
-            <div class="ui form stacked fluid form segment">
-                <form id="signupForm" action="/register" method="POST">
-                    <h3 class="ui header">Register</h3>
-                    <div class="two fields">
-                        <div class="field">
-                            <label>First Name</label>
-                            <input placeholder="First Name" type="text" name="firstName">
-                        </div>
-                        <div class="field">
-                            <label>Last Name</label>
-                            <input placeholder="Last Name" type="text" name="lastName">
-                        </div>
+<section class="ui basic segment">
+  <div class="ui middle aligned center aligned grid">
+    <aside class="ui six wide column">
+      <img src="images/zwitscherIcons/zwitscher_512_512.png" class="ui medium image">
+    </aside>
+    <div class="ui six wide column">
+        <!--<div class="ui stacked fluid form segment">-->
+        <div class="ui form stacked fluid form segment">
+            <form id="signupForm" action="/register" method="POST">
+                <h3 class="ui header">Register</h3>
+                <div class="two fields">
+                    <div class="field">
+                        <label>First Name</label>
+                        <input placeholder="First Name" type="text" name="firstName">
                     </div>
                     <div class="field">
-                        <label>Email</label>
-                        <input placeholder="Email" type="text" name="email">
+                        <label>Last Name</label>
+                        <input placeholder="Last Name" type="text" name="lastName">
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input placeholder="Email" type="text" name="email">
+                </div>
+                <div class="field">
+                  <label>Password</label>
+                  <div class="two fields">
+                    <div class="field">
+                      <input id="password" placeholder="Password" type="password" name="password">
                     </div>
                     <div class="field">
-                      <label>Password</label>
-                      <div class="two fields">
-                        <div class="field">
-                          <input id="password" placeholder="Password" type="password" name="password">
-                        </div>
-                        <div class="field">
-                          <input id="passwordConfirm" placeholder="Confirm Password" type="password" name="passwordConfirm">
-                        </div>
-                      </div>
+                      <input id="passwordConfirm" placeholder="Confirm Password" type="password" name="passwordConfirm">
                     </div>
-                    <button class="ui brown submit button">Signup</button>
-                </form>
-                {{> formerror}}
-            </div>
+                  </div>
+                </div>
+                <button class="ui brown submit button">Signup</button>
+            </form>
+            {{> formerror}}
         </div>
     </div>
+  </div>
 </section>

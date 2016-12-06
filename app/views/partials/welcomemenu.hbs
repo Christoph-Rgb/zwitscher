@@ -1,20 +1,29 @@
-<nav class="ui brown menu">
-    <header class="header item"> <a href="/"> Zwitscher </a> </header>
+<div class="ui divider"></div>
+
+<nav class="ui secondary brown menu">
+    <!--<header class="header item"> <a href="/"> Zwitscher </a> </header>-->
+    <a class="item" href="/">
+      <img class="ui image" src="images/zwitscherIcons/zwitscher_20_20.png">
+    </a>
     <div class="right menu">
 
       <div class="item">
         <form id="loginForm" class="ui mini form" action="/login" method="POST">
-          <div class="two fields">
+          <div class="three fields">
             <input id="email" placeholder="Email" type="text" name="email">
             <input id="password" placeholder="Password" type="password" name="password">
+            <a class="item" onclick="login()">  Login</a>
           </div>
         </form>
       </div>
 
-        <a class="item" onclick="login()">  Login</a>
+
         <a class="item" href="/signup"> Signup</a>
     </div>
 </nav>
+
+<div class="ui divider"></div>
+
 <script>
   function login() {
     const email = $('#email').val();

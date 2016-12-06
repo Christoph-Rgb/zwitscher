@@ -8,7 +8,7 @@ const tweetSchema = mongoose.Schema({
     ref: 'User',
   },
   message: String,
-  image: String,
+  imagePath: String,
   posted: Date,
 });
 

@@ -1,12 +1,22 @@
-<nav class="ui brown menu">
-    <header class="header item"><a href="/home"> Zwitscher </a></header>
+<div class="ui divider"></div>
+
+<nav class="ui secondary brown menu">
+    <!--<header class="header item"><a href="/home"> Zwitscher </a></header>-->
+    <a class="item" href="/home">
+      <img class="ui image" src="images/zwitscherIcons/zwitscher_20_20.png">
+    </a>
     <div class="right menu">
         <!--<a id="home"   class= "item" href="/home"> Donate</a>-->
         <!--<a id="report" class= "item" href="/report"> Report</a>-->
         <!--<a id="settings" class= "item" href="/settings"> Settings</a>-->
-        <a id="logout" class= "item" href="/logout"> Logout</a>
+      <a class="item" href="/logout">
+        <i class="power icon"></i>
+        Logout
+      </a>
     </div>
 </nav>
+
+<div class="ui divider"></div>
 
 <script>
     $("#{{_id}}").addClass("active item");
