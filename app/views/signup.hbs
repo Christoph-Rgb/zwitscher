@@ -13,16 +13,25 @@
                 <div class="two fields">
                     <div class="field">
                         <label>First Name</label>
-                        <input placeholder="First Name" type="text" name="firstName">
+                        <input placeholder="First Name" type="text" name="firstName" value="{{user.firstName}}">
                     </div>
                     <div class="field">
                         <label>Last Name</label>
-                        <input placeholder="Last Name" type="text" name="lastName">
+                        <input placeholder="Last Name" type="text" name="lastName" value="{{user.lastName}}">
                     </div>
                 </div>
                 <div class="field">
+                  <label>Gender</label>
+                  <select class="ui dropdown" name="gender">
+                    {{#select user.gender}}
+                      <option value="M">male</option>
+                      <option value="W">female</option>
+                    {{/select}}
+                  </select>
+                </div>
+                <div class="field">
                     <label>Email</label>
-                    <input placeholder="Email" type="text" name="email">
+                    <input placeholder="Email" type="text" name="email" value="{{user.email}}">
                 </div>
                 <div class="field">
                   <label>Password</label>

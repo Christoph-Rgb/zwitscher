@@ -38,8 +38,11 @@ exports.authenticate = {
     },
 
     failAction: function (request, reply, source, error) {
+      const user = request.payload;
+
       reply.view('login', {
         title: 'Login error',
+        user: user,
         errors: error.data.details,
       }).code(400);
     },
@@ -59,10 +62,15 @@ exports.authenticate = {
           loggedInUser: foundUser._id,
           scope: foundUser.scope,
         });
-        // reply.redirect('/home');
+
         reply.redirect('/userTimeline/' + foundUser._id);
       } else {
-        reply.redirect('/signup');
+        // reply.redirect('/signup');
+        reply.view('login', {
+          title: 'Login error',
+          user: user,
+          errors: [{ message: 'email or password incorrect' }],
+        }).code(400);
       }
     }).catch(err => {
       reply.redirect('/');
@@ -89,15 +97,21 @@ exports.register = {
       firstName: Joi.string().required(),
       lastName: Joi.string().required(),
       email: Joi.string().email().required(),
+      gender: Joi.string().required(),
 
       //TODO: change to min 6
       password: Joi.string().min(1).max(15).required(),
-      passwordConfirm: Joi.any().valid(Joi.ref('password')).required().options({ language: { any: { allowOnly: 'must match password' } } }),
+      passwordConfirm: Joi.any().valid(Joi.ref('password')).required()
+                          .options({ language: { any: { allowOnly: 'must match password' } } }),
     },
 
     failAction: function (request, reply, source, error) {
+
+      const user = request.payload;
+
       reply.view('signup', {
         title: 'Sign up error',
+        user: user,
         errors: error.data.details,
       }).code(400);
     },
@@ -110,6 +124,13 @@ exports.register = {
 
   handler: function (request, reply) {
     const user = new User(request.payload);
+    user.scope = 'user';
+    user.joined = new Date();
+    if (user.gender === 'M') {
+      user.profilePicture = '/images/profilePictures/male1.jpg';
+    } else {
+      user.profilePicture = '/images/profilePictures/female1.jpg';
+    }
 
     user.save().then(newUser => {
       reply.redirect('/login');
@@ -120,62 +141,62 @@ exports.register = {
 
 };
 
-exports.viewSettings = {
-
-  handler: function (request, reply) {
-    var userEmail = request.auth.credentials.loggedInUser;
-    User.findOne({ email: userEmail }).then(foundUser => {
-      reply.view('settings', { title: 'Edit Account Settings', user: foundUser });
-    }).catch(err => {
-      reply.redirect('/');
-    });
-  },
-
-};
-
-exports.updateSettings = {
-
-  validate: {
-
-    payload: {
-      firstName: Joi.string().required(),
-      lastName: Joi.string().required(),
-      email: Joi.string().email().required(),
-
-      //TODO: change to min 6
-      password: Joi.string().min(1).max(15).required(),
-      passwordConfirm: Joi.any().valid(Joi.ref('password')).required().options({ language: { any: { allowOnly: 'must match password' } } }),
-    },
-
-    failAction: function (request, reply, source, error) {
-      reply.view('settings', {
-        title: 'Update settings error',
-        errors: error.data.details,
-        user: request.payload,
-      }).code(400);
-    },
-
-    options: {
-      abortEarly: false,
-    },
-
-  },
-
-  handler: function (request, reply) {
-    const editedUser = request.payload;
-    const loggedInUserEmail = request.auth.credentials.loggedInUser;
-
-    User.findOne({ email: loggedInUserEmail }).then(user => {
-      user.firstName = editedUser.firstName;
-      user.lastName = editedUser.lastName;
-      user.email = editedUser.email;
-      user.password = editedUser.password;
-      return user.save();
-    }).then(user => {
-      reply.view('settings', { title: 'Edit Account Settings', user: user });
-    }).catch(err => {
-      reply.redirect('/');
-    });
-  },
-
-};
+// exports.viewSettings = {
+//
+//   handler: function (request, reply) {
+//     var userEmail = request.auth.credentials.loggedInUser;
+//     User.findOne({ email: userEmail }).then(foundUser => {
+//       reply.view('settings', { title: 'Edit Account Settings', user: foundUser });
+//     }).catch(err => {
+//       reply.redirect('/');
+//     });
+//   },
+//
+// };
+//
+// exports.updateSettings = {
+//
+//   validate: {
+//
+//     payload: {
+//       firstName: Joi.string().required(),
+//       lastName: Joi.string().required(),
+//       email: Joi.string().email().required(),
+//
+//       //TODO: change to min 6
+//       password: Joi.string().min(1).max(15).required(),
+//       passwordConfirm: Joi.any().valid(Joi.ref('password')).required().options({ language: { any: { allowOnly: 'must match password' } } }),
+//     },
+//
+//     failAction: function (request, reply, source, error) {
+//       reply.view('settings', {
+//         title: 'Update settings error',
+//         errors: error.data.details,
+//         user: request.payload,
+//       }).code(400);
+//     },
+//
+//     options: {
+//       abortEarly: false,
+//     },
+//
+//   },
+//
+//   handler: function (request, reply) {
+//     const editedUser = request.payload;
+//     const loggedInUserEmail = request.auth.credentials.loggedInUser;
+//
+//     User.findOne({ email: loggedInUserEmail }).then(user => {
+//       user.firstName = editedUser.firstName;
+//       user.lastName = editedUser.lastName;
+//       user.email = editedUser.email;
+//       user.password = editedUser.password;
+//       return user.save();
+//     }).then(user => {
+//       reply.view('settings', { title: 'Edit Account Settings', user: user });
+//     }).catch(err => {
+//       reply.redirect('/');
+//     });
+//   },
+//
+// };

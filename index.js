@@ -3,6 +3,18 @@
 const Hapi = require('hapi');
 const utils = require('./app/api/utils.js');
 
+//register helper function for handlebars
+const Handlebars = require('handlebars');
+Handlebars.registerHelper('select', function (value, options) {
+  return options.fn(this)
+      .split('\n')
+      .map(function (v) {
+        var t = 'value="' + value + '"';
+        return !RegExp(t).test(v) ? v : v.replace(t, t + ' selected="selected"');
+      })
+      .join('\n');
+});
+
 var server = new Hapi.Server();
 server.connection({ port: process.env.PORT || 4000 });
 

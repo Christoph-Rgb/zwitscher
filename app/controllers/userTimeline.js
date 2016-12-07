@@ -72,31 +72,35 @@ exports.postTweet = {
 
             user.joinedString = user.joined.getFullYear();
 
-            Tweet.find({ user: user._id }).sort({ posted: -1 })
-                .populate('user')
-                .then(tweets => {
+            User.find({}).then(allUsers => {
 
-                  tweets.forEach(tweet => {
-                    tweet.postedString = tweet.posted.toLocaleString('en-GB');
-                    if (loggedInUserScope === 'admin' || tweet.user._id.equals(loggedInUserID)) {
-                      tweet.canDelete = true;
-                    }
-                  });
+              Tweet.find({ user: user._id }).sort({ posted: -1 })
+                  .populate('user')
+                  .then(tweets => {
 
-                  reply.view('userTimeline', {
-                    title:  user.firstName + 's Timeline',
-                    user: user,
-                    loggedInUserID: loggedInUserID,
-                    canPost: true,
-                    tweets: tweets,
-                    message: message,
-                    errors: error.data.details,
-                  }).code(400);
-                })
-                .catch(err => {});
+                    tweets.forEach(tweet => {
+                      tweet.postedString = tweet.posted.toLocaleString('en-GB');
+                      if (loggedInUserScope === 'admin' || tweet.user._id.equals(loggedInUserID)) {
+                        tweet.canDelete = true;
+                      }
+                    });
+
+                    reply.view('userTimeline', {
+                      title:  user.firstName + 's Timeline',
+                      user: user,
+                      loggedInUserID: loggedInUserID,
+                      canPost: true,
+                      tweets: tweets,
+                      message: message,
+                      errors: error.data.details,
+                    }).code(400);
+                  })
+                  .catch(err => {});
+            })
+            .catch(err => {});
+
           })
-          .catch(err => {
-          });
+          .catch(err => {});
 
     },
   },
