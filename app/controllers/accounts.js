@@ -63,7 +63,8 @@ exports.authenticate = {
           scope: foundUser.scope,
         });
 
-        reply.redirect('/userTimeline/' + foundUser._id);
+        // reply.redirect('/userTimeline/' + foundUser._id);
+        reply.redirect('/home');
       } else {
         // reply.redirect('/signup');
         reply.view('login', {
@@ -141,6 +142,46 @@ exports.register = {
 
 };
 
+exports.removeUser = {
+  validate: {
+
+    payload: {
+      viewedUserID: Joi.string().required(),
+    },
+
+    failAction: function (request, reply, source, error) {
+
+      reply.redirect('/home');
+
+    },
+
+    options: {
+      abortEarly: false,
+    },
+
+  },
+
+  handler: function (request, reply) {
+    const viewedUserID = request.payload.viewedUserID;
+    const loggedInUserID = request.auth.credentials.loggedInUser;
+    const loggedInUserScope = request.auth.credentials.scope;
+
+    //TODO: delete all tweets?
+
+    User.findOne({ _id: viewedUserID })
+        .then(user => {
+
+          if (loggedInUserScope === 'admin' || user._id.equals(loggedInUserID)) {
+            user.remove();
+          }
+        })
+        .catch(err => {});
+    reply.redirect('/home');
+
+  },
+
+};
+
 // exports.viewSettings = {
 //
 //   handler: function (request, reply) {
@@ -165,7 +206,8 @@ exports.register = {
 //
 //       //TODO: change to min 6
 //       password: Joi.string().min(1).max(15).required(),
-//       passwordConfirm: Joi.any().valid(Joi.ref('password')).required().options({ language: { any: { allowOnly: 'must match password' } } }),
+//       passwordConfirm: Joi.any().valid(Joi.ref('password'))
+// .required().options({ language: { any: { allowOnly: 'must match password' } } }),
 //     },
 //
 //     failAction: function (request, reply, source, error) {

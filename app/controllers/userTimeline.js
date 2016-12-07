@@ -15,14 +15,13 @@ exports.userTimeline = {
     const loggedInUserScope = request.auth.credentials.scope;
     const viewedUserID = request.params.id;
 
-    User.findOne({ _id: viewedUserID })
-        .then(user => {
+    User.findOne({ _id: loggedInUserID }).then(loggedInUser => {
 
-          user.joinedString = user.joined.getFullYear();
+      User.findOne({ _id: viewedUserID })
+          .then(viewedUser => {
+            viewedUser.joinedString = viewedUser.joined.getFullYear();
 
-          User.find({}).then(allUsers => {
-
-            Tweet.find({ user: user._id }).sort({ posted: -1 })
+            Tweet.find({ user: viewedUser._id }).sort({ posted: -1 })
                 .populate('user')
                 .then(tweets => {
 
@@ -34,20 +33,21 @@ exports.userTimeline = {
                   });
 
                   reply.view('userTimeline', {
-                    title: user.firstName + 's Timeline',
-                    user: user,
-                    loggedInUserID: loggedInUserID,
+                    title: viewedUser.firstName + 's Timeline',
+                    user: viewedUser,
+                    loggedInUser: loggedInUser,
+                    // loggedInUserID: loggedInUserID,
                     canPost: loggedInUserID === viewedUserID,
                     tweets: tweets,
-                    allUsers: allUsers,
                   });
                 })
                 .catch(err => {});
           })
-          .catch(err => {});
-        })
-      .catch(err => {
-      });
+          .catch(err => {
+          });
+
+    })
+    .catch(err => {});
   },
 
 };
@@ -67,12 +67,11 @@ exports.postTweet = {
       const loggedInUserScope = request.auth.credentials.scope;
       const message = request.payload.message;
 
+      //only loggedInUser can post so viewed user equals loggedInUser
       User.findOne({ _id: loggedInUserID })
           .then(user => {
 
-            user.joinedString = user.joined.getFullYear();
-
-            User.find({}).then(allUsers => {
+              user.joinedString = user.joined.getFullYear();
 
               Tweet.find({ user: user._id }).sort({ posted: -1 })
                   .populate('user')
@@ -88,7 +87,8 @@ exports.postTweet = {
                     reply.view('userTimeline', {
                       title:  user.firstName + 's Timeline',
                       user: user,
-                      loggedInUserID: loggedInUserID,
+                      loggedInUser: user,
+                      // loggedInUserID: loggedInUserID,
                       canPost: true,
                       tweets: tweets,
                       message: message,
@@ -97,9 +97,6 @@ exports.postTweet = {
                   })
                   .catch(err => {});
             })
-            .catch(err => {});
-
-          })
           .catch(err => {});
 
     },

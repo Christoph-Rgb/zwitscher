@@ -1,0 +1,37 @@
+<div class="ui card">
+  <a class="image" href="/userTimeline/{{_id}}">
+    <img src="{{profilePicture}}">
+  </a>
+  <div class="content">
+    <div class="header">{{firstName}} {{lastName}}</div>
+    <!--<div class="meta">-->
+    <!--<a>Friends</a>-->
+    <!--</div>-->
+    <!--<div class="description">-->
+    <!--Matthew is an interior designer living in New York.-->
+    <!--</div>-->
+    <div class="description">
+      joined {{joinedString}}
+    </div>
+  </div>
+  {{#if deletable}}
+    <div class="extra center aligned content">
+      <form class="ui form" action="/removeUser" method="post">
+        <input type="hidden" name="viewedUserID" value="{{_id}}">
+        <button class="ui red basic submit button">
+          <i class="trash icon"></i>
+          Remove User</button>
+      </form>
+    </div>
+  {{/if}}
+
+  <!--<div class="extra content">-->
+  <!--<span class="right floated">-->
+  <!--joined {{joined}}-->
+  <!--</span>-->
+  <!--<span>-->
+  <!--<i class="user icon"></i>-->
+  <!--75 Friends-->
+  <!--</span>-->
+  <!--</div>-->
+</div>

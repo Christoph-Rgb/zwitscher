@@ -46,7 +46,7 @@ suite('User API tests', function () {
     assert.isNull(user2);
   });
 
-  test('delete a user', function () {
+  test('delete own user', function () {
     const u = zwitscherService.createUser(newUser);
     assert(zwitscherService.getUser(u._id) != null);
     zwitscherService.deleteOneUser(u._id);

@@ -2,8 +2,11 @@
 
 <nav class="ui secondary brown menu">
     <!--<header class="header item"><a href="/home"> Zwitscher </a></header>-->
-    <a class="item" href="/userTimeline/{{loggedInUserID}}">
-      <img class="ui image" src="/images/zwitscherIcons/zwitscher_20_20.png">
+    <a class="item" href="/home">
+      <img class="ui mini image" src="/images/zwitscherIcons/zwitscher_48_48.png">
+    </a>
+    <a class="item" href="/userTimeline/{{loggedInUser._id}}">
+        <img class="ui mini circular image" src="{{loggedInUser.profilePicture}}">
     </a>
     <div class="right menu">
         <!--<a id="home"   class= "item" href="/home"> Donate</a>-->
