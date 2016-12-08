@@ -7,24 +7,23 @@ const _ = require('lodash');
 
 suite('Tweet API tests', function () {
 
+  //TODO: find out why beforeEach is run several times in one test configuration
+
   let adminUser = fixtures.users[0];
   let user = fixtures.users[1];
   let users = fixtures.users;
   let tweets = fixtures.tweets;
   let newTweet = fixtures.newTweet;
-
   let zwitscherService = new ZwitscherService(fixtures.zwitscherService);
 
   beforeEach(function () {
-
     zwitscherService.login(adminUser);
     zwitscherService.deleteAllUsers();
+    zwitscherService.deleteAllTweets();
 
     for (let i = 1; i < users.length; i++) {
       zwitscherService.createUser(users[i]);
     }
-
-    zwitscherService.deleteAllTweets();
 
     zwitscherService.logout();
     zwitscherService.login(user);
@@ -137,6 +136,8 @@ suite('Tweet API tests', function () {
   });
 
   test('get all tweets from user', function () {
+    zwitscherService.logout();
+    zwitscherService.login(user);
 
     // const createdUser = zwitscherService.createUser(user);
     // zwitscherService.logout();

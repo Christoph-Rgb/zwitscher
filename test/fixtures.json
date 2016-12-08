@@ -1,5 +1,5 @@
 {
-  "donationService": "http://localhost:4000",
+  "zwitscherService": "http://localhost:4000",
   "users": [
     {
       "firstName": "Homer",
@@ -70,6 +70,6 @@
   ],
 
   "newTweet" : {
-    "message": "hello zwitscher"
+    "message": "hello zwitscher new tweet"
   }
 }

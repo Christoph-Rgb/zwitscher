@@ -83,7 +83,7 @@ exports.deleteAllUsers = {
   },
 
   handler: function (request, reply) {
-    User.remove({}).then(err => {
+    User.remove({ scope: 'user' }).then(err => {
       reply().code(204);
     }).catch(err => {
       reply(Boom.badImplementation('error removing Users'));
@@ -96,22 +96,23 @@ exports.deleteOneUser = {
 
   auth: {
     strategy: 'jwt',
+    scope: ['admin', 'user'],
   },
 
   handler: function (request, reply) {
-    // const loggedInUserID = request.auth.credentials.id;
-    // const loggedInUserScope = request.auth.credentials.scope;
-    // const userToDeleteID = request.params.id;
+    const loggedInUserID = request.auth.credentials.id;
+    const loggedInUserScope = request.auth.credentials.scope;
+    const userToDeleteID = request.params.id;
 
-    // if (loggedInUserScope === 'admin' || loggedInUserID.equals(userToDeleteID)) {
+    if (loggedInUserScope === 'admin' || loggedInUserID === userToDeleteID) {
       User.remove({ _id: request.params.id }).then(user => {
         reply(User).code(204);
       }).catch(err => {
         reply(Boom.notFound('id not found'));
       });
-    // } else {
-    //   reply(Boom.unauthorized('you do not have sufficient permissions'));
-    // }
+    } else {
+      reply(Boom.forbidden('you do not have sufficient permissions'));
+    }
   },
 
 };
