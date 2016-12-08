@@ -1,4 +1,4 @@
-<div class="ui raised fluid card">
+<div class="ui raised card">
   <div class="extra content">
     <div class="left floated author">
       <img class="ui avatar image" src="{{user.profilePicture}}"> {{user.firstName}} {{user.lastName}}
@@ -7,12 +7,12 @@
       posted on {{postedString}}
     </div>
   </div>
-  {{#if imagePath}}
-    <div class="content">
-      <img class="ui fluid image" src="{{imagePath}}">
-    </div>
-  {{/if}}
   <div class="content">
+    {{#if imagePath}}
+      <div class="ui basic segment">
+        <img class="ui fluid rounded image" src="{{imagePath}}">
+      </div>
+    {{/if}}
     <div class="description">
       <p>{{message}}</p>
     </div>

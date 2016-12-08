@@ -3,6 +3,7 @@
 const User = require('../models/user');
 const Tweet = require('../models/tweet');
 const Joi = require('joi');
+const GCloud = require('gcloud');
 
 exports.userTimeline = {
 
@@ -58,9 +59,14 @@ exports.postTweet = {
     scope: ['admin', 'user'],
   },
 
+  payload: {
+    maxBytes: 6000000,
+  },
+
   validate: {
     payload: {
       message: Joi.string().required(),
+      image: Joi.optional(),
     },
     failAction: function (request, reply, source, error) {
       const loggedInUserID = request.auth.credentials.loggedInUser;
@@ -103,18 +109,50 @@ exports.postTweet = {
   },
 
   handler: function (request, reply) {
-    const userID = request.auth.credentials.loggedInUser;
+    const loggedInUserID = request.auth.credentials.loggedInUser;
     const message = request.payload.message;
+    const image = request.payload.image;
 
     let tweet = new Tweet();
-    tweet.user = userID;
+    tweet.user = loggedInUserID;
     tweet.message = message;
     tweet.posted =  new Date();
 
-    tweet.save();
+    if (image.length) {
+      var storage = GCloud.storage({
+        projectId: 'glowing-fire-9226',
+        keyFilename: ('gcloudKeyFile.json'),
+      });
+      var bucket = storage.bucket('glowing-fire-9226.appspot.com');
 
-    reply.redirect('/userTimeline/' + userID);
+      const fileName = loggedInUserID + '/' + new Date().getTime();
+      const newFile = bucket.file(fileName);
 
+      uploadFile(newFile, image, function (err) {
+        if (err !== null) {
+
+          bucket.file(fileName).getSignedUrl({
+            action: 'read',
+            expires: '08-12-2025',
+          }, function (err, url) {
+            if (!err) {
+
+              tweet.imagePath = url;
+              tweet.save();
+
+              reply.redirect('/userTimeline/' + loggedInUserID);
+
+            } else {
+              //TODO: redirect to error page
+              console.error(err);
+            }
+          });
+        }
+      });
+    } else {
+      tweet.save();
+      reply.redirect('/userTimeline/' + loggedInUserID);
+    }
   },
 
 };
@@ -145,3 +183,21 @@ exports.deleteTweet = {
   },
 
 };
+
+function uploadFile(file, contents, callback) {
+  // open write stream
+  var stream = file.createWriteStream({
+    metadata: {
+      contentType: 'image/jpeg',
+    },
+  });
+
+  // if there is an error signal back
+  stream.on('error', callback);
+
+  // if everything is successfull signal back
+  stream.on('finish', callback);
+
+  // send the contents
+  stream.end(contents);
+}

@@ -56,13 +56,16 @@
 
   "tweets": [
     {
-      "message": "hello zwitscher"
+      "message": "hello zwitscher",
+      "imagePath": "https://firebasestorage.googleapis.com/v0/b/glowing-fire-9226.appspot.com/o/samplePictures%2Fafrican-elephant-wallpapers-animal-backgrounds-desktop-93896.jpg?alt=media&token=051b3b33-d7e0-429e-bd9e-1b3ed847a1bf"
     },
     {
-      "message": "this is my second tweet"
+      "message": "hello",
+      "imagePath": "https://firebasestorage.googleapis.com/v0/b/glowing-fire-9226.appspot.com/o/samplePictures%2F02250_heyyou_2560x1440.jpg?alt=media&token=030a053f-71be-4e8c-910a-d33d1350682f"
     },
     {
-      "message": "get me some doughnuts"
+      "message": "get me some doughnuts",
+      "imagePath": "https://firebasestorage.googleapis.com/v0/b/glowing-fire-9226.appspot.com/o/samplePictures%2F01883_samedog_1920x1080.jpg?alt=media&token=bf037aa4-ec9e-4cb5-8f22-cf55903dbfca"
     },
     {
       "message": "aicaramba!"

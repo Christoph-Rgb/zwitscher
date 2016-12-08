@@ -1,20 +1,28 @@
 {{#if canPost}}
   <div class="ui fluid raised card">
-    <form class="ui form" action="/postTweet" method="post">
+    <form class="ui form" id="tweetForm" action="/postTweet" method="post" enctype='multipart/form-data'>
     <div class="ui fluid raised card">
       <div class="extra content">
         <div class="left floated author">
           <img class="ui avatar image" src="{{user.profilePicture}}"> {{user.firstName}} {{user.lastName}}
         </div>
         <div class="right floated">
+          <div class="ui icon button" id="camerabutton" data-tooltip="Add a picture to your babble" data-inverted="">
+            <i class="camera icon"></i></div>
           <button class="ui brown submit button">Post</button>
         </div>
 
       </div>
       <div class="ui content">
         <div class="description">
+          <div class="ui basic segment" id="imageSegment" style="display:none">
+            <img class="ui fluid rounded image" id="imagePreview" src="">
+          </div>
           <div class="ui fluid input">
             <input type="text" name="message" placeholder="Share your thoughts" value="{{message}}">
+          </div>
+          <div class="field">
+            <input type="file" name="image" id="fileInput" accept="image/*"  style="display:none">
           </div>
           {{> formerror}}
         </div>
@@ -22,4 +30,40 @@
     </div>
     </form>
   </div>
+  <script>
+    $(document).ready(function () {
+
+      $('#tweetForm #camerabutton')
+          .on('click', function (e) {
+            $('#tweetForm #fileInput', $(e.target).parents()).click();
+          });
+
+      $('#tweetForm #fileInput').on('change', function (input) {
+        var preview = $('#tweetForm #imagePreview');
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#tweetForm #imagePreview').attr('src', e.target.result);
+            $('#imageSegment').attr("style", "display: block");
+          }
+          reader.readAsDataURL(this.files[0]);
+        } else {
+          $('#tweetForm #imagePreview').removeAttr('src');
+          $('#imageSegment').attr("style", "display: none");
+        }
+      });
+
+      $('#tweetForm #imagePreview')
+          .on('click', function (e) {
+            var control = $("#tweetForm #fileInput");
+            control.replaceWith(control.val('').clone(true));
+            $('#tweetForm #imagePreview').removeAttr('src');
+            $('#imageSegment').attr("style", "display: none");
+          });
+
+      $('#tweetForm').on('submit', function () {
+        $('#tweetForm').addClass('loading disabled');
+      });
+    });
+  </script>
 {{/if}}
