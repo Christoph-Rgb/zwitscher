@@ -1,0 +1,20 @@
+{{> mainmenu _id="home" }}
+
+<section class="ui centered stackable grid">
+
+  <div class="ui eleven wide stacked column">
+    {{> postTweet }}
+    <div class="ui stackable two cards">
+    {{#each tweets}}
+      {{> tweet }}
+    {{/each}}
+    </div>
+  </div>
+
+  <div class="ui four wide column">
+    {{#with user}}
+      {{> userCard }}
+    {{/with}}
+  </div>
+
+</section>
