@@ -60,7 +60,7 @@ exports.postTweet = {
   },
 
   payload: {
-    maxBytes: 6000000,
+    maxBytes: 1000000,
   },
 
   validate: {
@@ -129,7 +129,7 @@ exports.postTweet = {
       const newFile = bucket.file(fileName);
 
       uploadFile(newFile, image, function (err) {
-        if (err !== null) {
+        if (!err) {
 
           bucket.file(fileName).getSignedUrl({
             action: 'read',
@@ -147,6 +147,9 @@ exports.postTweet = {
               console.error(err);
             }
           });
+        } else {
+          //TODO: redirect to error page
+          console.error(err);
         }
       });
     } else {

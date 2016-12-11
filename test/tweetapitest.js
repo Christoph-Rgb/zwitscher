@@ -4,6 +4,7 @@ const assert = require('chai').assert;
 const ZwitscherService = require('./zwitscher-service');
 const fixtures = require('./fixtures.json');
 const _ = require('lodash');
+const fs = require('fs');
 
 suite('Tweet API tests', function () {
 
@@ -43,13 +44,63 @@ suite('Tweet API tests', function () {
     zwitscherService.logout();
   });
 
-  test('create a tweet', function () {
+  test('post a tweet', function () {
     zwitscherService.logout();
     zwitscherService.login(user);
 
     const returnedTweet = zwitscherService.postTweet(newTweet);
     assert(_.some([returnedTweet], newTweet), 'returnedTweet must be a superset of newTweet');
     assert.isDefined(returnedTweet._id);
+  });
+
+  test('post a tweet with picture', function (done) {
+    zwitscherService.logout();
+    zwitscherService.login(user);
+
+    let tweetWithPicture = {
+      message: newTweet.message,
+    };
+
+    fs.readFile('../public/images/profilePictures/male1.jpg', (err, data) => {
+      tweetWithPicture.image = new Buffer(data).toString('base64');
+
+      const returnedTweet = zwitscherService.postTweet(tweetWithPicture);
+      assert.equal(returnedTweet.message, tweetWithPicture.message);
+      assert.isDefined(returnedTweet.imagePath);
+      assert(returnedTweet.imagePath.startsWith('https://storage.googleapis.com/glowing-fire-9226.appspot.com'));
+      assert.isDefined(returnedTweet._id);
+
+      done();
+    });
+
+    // fs.readFile('//D:/_images/profilePictures/male1.jpg', function (err, data) {
+    //   if (err) throw err; // Fail if the file can't be read.
+    //
+    //   newTweet.image = data;
+    //
+    //   const returnedTweet = zwitscherService.postTweet(newTweet);
+    //   assert(_.some([returnedTweet], newTweet), 'returnedTweet must be a superset of newTweet');
+    //   assert.isDefined(returnedTweet._id);
+    //
+    //   done();
+    // });
+
+  });
+
+  test('post a tweet with invalid picture', function () {
+    zwitscherService.logout();
+    zwitscherService.login(user);
+
+    let tweetWithPicture = {
+      message: newTweet.message,
+    };
+
+    tweetWithPicture.image = 'NotBase64EncodedString';
+
+    const returnedTweet = zwitscherService.postTweet(tweetWithPicture);
+
+    assert.isNull(returnedTweet);
+
   });
 
   test('get tweet', function () {
