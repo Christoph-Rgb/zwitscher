@@ -31,6 +31,8 @@ exports.userTimeline = {
                     if (loggedInUserScope === 'admin' || tweet.user._id.equals(loggedInUserID)) {
                       tweet.canDelete = true;
                     }
+
+                    tweet.timeLine = 'userTimeline';
                   });
 
                   reply.view('userTimeline', {
@@ -40,6 +42,7 @@ exports.userTimeline = {
                     // loggedInUserID: loggedInUserID,
                     canPost: loggedInUserID === viewedUserID,
                     tweets: tweets,
+                    timeLine: 'userTimeline',
                   });
                 })
                 .catch(err => {});
@@ -88,6 +91,8 @@ exports.postTweet = {
                       if (loggedInUserScope === 'admin' || tweet.user._id.equals(loggedInUserID)) {
                         tweet.canDelete = true;
                       }
+
+                      tweet.timeLine = 'userTimeline';
                     });
 
                     reply.view('userTimeline', {
@@ -99,6 +104,7 @@ exports.postTweet = {
                       tweets: tweets,
                       message: message,
                       errors: error.data.details,
+                      timeLine: 'userTimeline',
                     }).code(400);
                   })
                   .catch(err => {});

@@ -5,7 +5,7 @@ const Tweet = require('../models/tweet');
 const Joi = require('joi');
 const GCloud = require('gcloud');
 
-exports.userTimeline = {
+exports.globalTimeline = {
 
   auth: {
     scope: ['admin', 'user'],
@@ -14,39 +14,34 @@ exports.userTimeline = {
   handler: function (request, reply) {
     const loggedInUserID = request.auth.credentials.loggedInUser;
     const loggedInUserScope = request.auth.credentials.scope;
-    const viewedUserID = request.params.id;
 
     User.findOne({ _id: loggedInUserID }).then(loggedInUser => {
 
-      User.findOne({ _id: viewedUserID })
-          .then(viewedUser => {
-            viewedUser.joinedString = viewedUser.joined.getFullYear();
+      loggedInUser.joinedString = loggedInUser.joined.getFullYear();
 
-            Tweet.find({ user: viewedUser._id }).sort({ posted: -1 })
-                .populate('user')
-                .then(tweets => {
+      Tweet.find({ }).sort({ posted: -1 })
+          .populate('user')
+          .then(tweets => {
 
-                  tweets.forEach(tweet => {
-                    tweet.postedString = tweet.posted.toLocaleString('en-GB');
-                    if (loggedInUserScope === 'admin' || tweet.user._id.equals(loggedInUserID)) {
-                      tweet.canDelete = true;
-                    }
-                  });
+            tweets.forEach(tweet => {
+              tweet.postedString = tweet.posted.toLocaleString('en-GB');
+              if (loggedInUserScope === 'admin' || tweet.user._id.equals(loggedInUserID)) {
+                tweet.canDelete = true;
+              }
 
-                  reply.view('userTimeline', {
-                    title: viewedUser.firstName + 's Timeline',
-                    user: viewedUser,
-                    loggedInUser: loggedInUser,
-                    // loggedInUserID: loggedInUserID,
-                    canPost: loggedInUserID === viewedUserID,
-                    tweets: tweets,
-                  });
-                })
-                .catch(err => {});
+              tweet.timeLine = 'globalTimeline';
+            });
+
+            reply.view('globalTimeline', {
+              title: 'Global Timeline',
+              user: loggedInUser,
+              loggedInUser: loggedInUser,
+              canPost: true,
+              tweets: tweets,
+              timeLine: 'globalTimeline',
+            });
           })
-          .catch(err => {
-          });
-
+      .catch(err => {});
     })
     .catch(err => {});
   },
@@ -79,7 +74,7 @@ exports.postTweet = {
 
               user.joinedString = user.joined.getFullYear();
 
-              Tweet.find({ user: user._id }).sort({ posted: -1 })
+              Tweet.find().sort({ posted: -1 })
                   .populate('user')
                   .then(tweets => {
 
@@ -88,17 +83,19 @@ exports.postTweet = {
                       if (loggedInUserScope === 'admin' || tweet.user._id.equals(loggedInUserID)) {
                         tweet.canDelete = true;
                       }
+
+                      tweet.timeLine = 'globalTimeline';
                     });
 
-                    reply.view('userTimeline', {
-                      title:  user.firstName + 's Timeline',
+                    reply.view('globalTimeline', {
+                      title: 'Global Timeline',
                       user: user,
                       loggedInUser: user,
-                      // loggedInUserID: loggedInUserID,
                       canPost: true,
                       tweets: tweets,
                       message: message,
                       errors: error.data.details,
+                      timeLine: 'globalTimeline',
                     }).code(400);
                   })
                   .catch(err => {});
@@ -140,7 +137,7 @@ exports.postTweet = {
               tweet.imagePath = url;
               tweet.save();
 
-              reply.redirect('/userTimeline/' + loggedInUserID);
+              reply.redirect('/globalTimeline');
 
             } else {
               //TODO: redirect to error page
@@ -154,7 +151,7 @@ exports.postTweet = {
       });
     } else {
       tweet.save();
-      reply.redirect('/userTimeline/' + loggedInUserID);
+      reply.redirect('/globalTimeline');
     }
   },
 
@@ -169,7 +166,6 @@ exports.deleteTweet = {
   handler: function (request, reply) {
     const loggedInUserID = request.auth.credentials.loggedInUser;
     const loggedInUserScope = request.auth.credentials.scope;
-    const viewedUserID = request.payload.viewedUserID;
     const tweetID = request.payload.tweetID;
 
     Tweet.findOne({ _id: tweetID })
@@ -181,7 +177,7 @@ exports.deleteTweet = {
         })
         .catch(err => {});
 
-    reply.redirect('/userTimeline/' + viewedUserID);
+    reply.redirect('/globalTimeline');
 
   },
 

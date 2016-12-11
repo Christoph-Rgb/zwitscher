@@ -4,17 +4,18 @@
 
   <div class="ui eleven wide stacked column">
     {{> postTweet }}
-    <div class="ui stackable two cards">
-    {{#each tweets}}
-      {{> tweet }}
-    {{/each}}
+    <div class="ui fluid stackable cards">
+      {{#each tweets}}
+        {{> tweet }}
+      {{/each}}
     </div>
   </div>
 
-  <div class="ui four wide column">
-    {{#with user}}
-      {{> userCard }}
-    {{/with}}
-  </div>
+    <div class="ui four wide column">
+      {{#with loggedInUser}}
+        {{> userCard }}
+      {{/with}}
+    </div>
+
 
 </section>

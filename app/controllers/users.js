@@ -3,7 +3,7 @@
 const User = require('../models/user');
 const Joi = require('joi');
 
-exports.user = {
+exports.users = {
 
   auth: {
     scope: ['admin', 'user'],
@@ -23,7 +23,7 @@ exports.user = {
                 }
               });
 
-              reply.view('home', {
+              reply.view('users', {
                 title: 'Zwitscher home',
                 users: allUsers,
                 loggedInUser: loggedInUser,

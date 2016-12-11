@@ -151,7 +151,7 @@ exports.removeUser = {
 
     failAction: function (request, reply, source, error) {
 
-      reply.redirect('/home');
+      reply.redirect('/users');
 
     },
 
@@ -176,7 +176,7 @@ exports.removeUser = {
           }
         })
         .catch(err => {});
-    reply.redirect('/home');
+    reply.redirect('/users');
 
   },
 
