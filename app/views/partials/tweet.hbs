@@ -20,7 +20,7 @@
   {{#if canDelete}}
     <div class="extra content">
       <div class="right floated trash icon">
-        <form class="ui form" action="/{{timeLine}}/deleteTweet" method="post">
+        <form class="ui form" action="/{{displayedTimeline}}/deleteTweet" method="post">
           <input type="hidden" name="tweetID" value="{{_id}}">
           <input type="hidden" name="viewedUserID" value="{{user._id}}">
           <button class="ui basic brown compact icon submit button">

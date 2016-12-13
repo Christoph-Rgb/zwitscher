@@ -1,6 +1,6 @@
 {{#if canPost}}
   <div class="ui fluid raised card">
-    <form class="ui form" id="tweetForm" action="/{{timeLine}}/postTweet" method="post" enctype='multipart/form-data'>
+    <form class="ui form" id="tweetForm" action="/{{displayedTimeline}}/postTweet" method="post" enctype='multipart/form-data'>
     <div class="ui fluid raised card">
       <div class="extra content">
         <div class="left floated author">
@@ -19,10 +19,10 @@
             <img class="ui fluid rounded image" id="imagePreview" src="">
           </div>
           <div class="ui fluid input">
-            <input type="text" name="message" placeholder="Share your thoughts" value="{{message}}">
+            <input type="text" name="tweetMessage" placeholder="Share your thoughts" value="{{tweetMessage}}">
           </div>
           <div class="field">
-            <input type="file" name="image" id="fileInput" accept="image/*"  style="display:none">
+            <input type="file" name="tweetImage" id="fileInput" accept="image/*"  style="display:none">
           </div>
           {{> formerror}}
         </div>
