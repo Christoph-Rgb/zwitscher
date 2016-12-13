@@ -1,28 +1,28 @@
 <div class="ui fluid raised card">
   <div class="extra content">
     <div class="left floated author">
-      <img class="ui avatar image" src="{{user.profilePicture}}"> {{user.firstName}} {{user.lastName}}
+      <img class="ui avatar image" src="{{tweet.user.profilePicture}}"> {{tweet.user.firstName}} {{tweet.user.lastName}}
     </div>
     <div class="right floated">
-      posted on {{postedString}}
+      posted on {{tweet.postedString}}
     </div>
   </div>
   <div class="content">
-    {{#if imagePath}}
+    {{#if tweet.imagePath}}
       <div class="ui basic segment">
-        <img class="ui fluid rounded image" src="{{imagePath}}">
+        <img class="ui fluid rounded image" src="{{tweet.imagePath}}">
       </div>
     {{/if}}
     <div class="description">
-      <p>{{message}}</p>
+      <p>{{tweet.message}}</p>
     </div>
   </div>
-  {{#if canDelete}}
+  {{#if tweet.canDelete}}
     <div class="extra content">
       <div class="right floated trash icon">
         <form class="ui form" action="/{{displayedTimeline}}/deleteTweet" method="post">
-          <input type="hidden" name="tweetID" value="{{_id}}">
-          <input type="hidden" name="viewedUserID" value="{{user._id}}">
+          <input type="hidden" name="tweetID" value="{{tweet._id}}">
+          <input type="hidden" name="viewedUserID" value="{{tweet.user._id}}">
           <button class="ui basic brown compact icon submit button">
             <i class="trash icon"></i>
           </button>

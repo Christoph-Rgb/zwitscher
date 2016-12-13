@@ -114,7 +114,7 @@ function showTimeline(timeline, request, reply) {
 
   getUser({ _id: loggedInUserID }).then(loggedInUser => {
     getUser({ _id: viewedUserID }).then(viewedUser => {
-      getTweets(loggedInUserID, loggedInUserScope, timeline, tweetSearchOptions).then(tweets => {
+      getTweets(loggedInUserID, loggedInUserScope, tweetSearchOptions).then(tweets => {
 
         reply.view(timeline, {
           title: viewedUser.firstName + 's Timeline',
@@ -122,7 +122,6 @@ function showTimeline(timeline, request, reply) {
           loggedInUser: loggedInUser,
           canPost: loggedInUserID === viewedUserID,
           tweets: tweets,
-          displayedTimeline: timeline,
         });
 
       }).catch(err => {console.log(err.message);});
@@ -143,7 +142,7 @@ function showTimelineWithErrors(timeline, request, reply, source, error) {
   }
 
   getUser({ _id: loggedInUserID }).then(loggedInUser => {
-    getTweets(loggedInUserID, loggedInUserScope, timeline, tweetSearchOptions).then(tweets => {
+    getTweets(loggedInUserID, loggedInUserScope, tweetSearchOptions).then(tweets => {
 
       //only loggedInUser can post on userTimeline => viewedUser == loggedInUser
       reply.view(timeline, {
@@ -152,7 +151,6 @@ function showTimelineWithErrors(timeline, request, reply, source, error) {
         loggedInUser: loggedInUser,
         canPost: true,
         tweets: tweets,
-        displayedTimeline: timeline,
         tweetMessage: tweetMessage,
         errors: error.data.details,
       }).code(400);
@@ -235,7 +233,7 @@ function getUser(searchOptions) {
   });
 }
 
-function getTweets(loggedInUserID, loggedInUserScope, displayedTimeline, searchOptions) {
+function getTweets(loggedInUserID, loggedInUserScope, searchOptions) {
   return new Promise(function (resolve, reject) {
     Tweet.find(searchOptions).sort({ posted: -1 })
         .populate('user')
@@ -249,9 +247,6 @@ function getTweets(loggedInUserID, loggedInUserScope, displayedTimeline, searchO
             if (loggedInUserScope === 'admin' || tweet.user._id.equals(loggedInUserID)) {
               tweet.canDelete = true;
             }
-
-            //TODO: refactor
-            tweet.displayedTimeline = displayedTimeline;
           });
 
           resolve(foundTweets);

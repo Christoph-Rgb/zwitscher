@@ -3,10 +3,10 @@
 <section class="ui centered stackable grid">
 
   <div class="ui eleven wide stacked column">
-    {{> postTweet }}
+    {{> postTweet displayedTimeline='globalTimeline' }}
     <div class="ui fluid stackable cards">
       {{#each tweets}}
-        {{> tweet }}
+        {{> tweet tweet=this displayedTimeline='globalTimeline' }}
       {{/each}}
     </div>
   </div>
