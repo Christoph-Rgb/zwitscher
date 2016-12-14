@@ -32,7 +32,7 @@ $(document).ready(function () {
     } else if (this.baseURI.includes('userTimeline')) {
       path = '/userTimeline/deleteTweets';
     } else if (this.baseURI.includes('users')) {
-      path = '/users/deleteUsers';
+      path = '/users/removeUsers';
     } else {
       return;
     }
@@ -69,6 +69,8 @@ function hideMultipleDelete() {
 
   //display toggle button on tweets
   $('.deleteSelector').attr('style', 'display: none');
+
+  $('.deleteCheckbox').prop('checked', false);
 }
 
 function showMultipleDelete() {
@@ -78,4 +80,6 @@ function showMultipleDelete() {
 
   //display toggle button on tweets
   $('.deleteSelector').attr('style', 'display: block');
+
+  $('.deleteCheckbox').prop('checked', false);
 }

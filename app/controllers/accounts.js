@@ -182,6 +182,47 @@ exports.removeUser = {
 
 };
 
+exports.removeMultipleUsers = {
+
+  auth: {
+    scope: ['admin'],
+  },
+
+  validate: {
+
+    payload: {
+      itemsToDelete: Joi.array().required(),
+    },
+
+    failAction: function (request, reply, source, error) {
+      reply.redirect('/users');
+    },
+
+    options: {
+      abortEarly: false,
+    },
+
+  },
+
+  handler: function (request, reply) {
+    const usersToDelete = request.payload.itemsToDelete;
+
+    //TODO: delete all tweets?
+
+    User.find({ _id: { $in: usersToDelete } })
+        .then(users => {
+          users.forEach(user => {
+              user.remove();
+            });
+        })
+        .catch(err => { console.log(err.message); });
+
+    reply.redirect('/users');
+
+  },
+
+};
+
 // exports.viewSettings = {
 //
 //   handler: function (request, reply) {

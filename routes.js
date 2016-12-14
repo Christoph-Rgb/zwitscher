@@ -16,7 +16,8 @@ module.exports = [
   { method: 'GET', path: '/login', config: Accounts.login },
   { method: 'POST', path: '/login', config: Accounts.authenticate },
   { method: 'GET', path: '/logout', config: Accounts.logout },
-  { method: 'POST', path: '/removeUser', config: Accounts.removeUser },
+  { method: 'POST', path: '/users/removeUser', config: Accounts.removeUser },
+  { method: 'POST', path: '/users/removeUsers', config: Accounts.removeMultipleUsers },
 
   { method: 'GET', path: '/globalTimeline', config: Tweets.showGlobalTimeline },
   { method: 'POST', path: '/globalTimeline/postTweet', config: Tweets.postTweetGlobalTimeline },

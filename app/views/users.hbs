@@ -1,7 +1,24 @@
 {{> mainmenu _id="home" }}
 
-<div class="ui four stackable link cards">
-  {{#each users}}
-    {{> userCard }}
-  {{/each}}
-</div>
+<section class="ui centered stackable grid">
+
+  <div class="ui eleven wide stacked column">
+    <div class="ui three stackable cards">
+    {{#each users}}
+      {{> userCard }}
+    {{/each}}
+    </div>
+  </div>
+
+
+  {{#if isAdmin}}
+    <div class="ui four wide stacked column">
+      <div class="ui stackable cards">
+        {{> userButtonsCard }}
+        {{> deleteCard }}
+      </div>
+    </div>
+  {{/if}}
+</section>
+
+<script src="/scripts/deleteMultipleItems.js"></script>

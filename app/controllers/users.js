@@ -18,8 +18,8 @@ exports.users = {
 
               allUsers.forEach(user => {
                 user.joinedString = user.joined.getFullYear();
-                if (loggedInUser.scope === 'admin' && !user._id.equals(loggedInUser._id)){
-                  user.deletable = true;
+                if (loggedInUser.scope === 'admin' && !user._id.equals(loggedInUser._id)) {
+                  user.canDelete = true;
                 }
               });
 

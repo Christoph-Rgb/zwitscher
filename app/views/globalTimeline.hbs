@@ -6,7 +6,7 @@
     {{> postTweet displayedTimeline='globalTimeline' }}
     <div class="ui fluid stackable cards">
       {{#each tweets}}
-        {{> tweet tweet=this displayedTimeline='globalTimeline' }}
+        {{> tweetCard tweet=this displayedTimeline='globalTimeline' }}
       {{/each}}
     </div>
   </div>

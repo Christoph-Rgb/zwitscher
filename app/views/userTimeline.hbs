@@ -6,7 +6,7 @@
     {{> postTweet displayedTimeline='userTimeline' }}
     <div class="ui stackable two cards">
       {{#each tweets }}
-        {{> tweet tweet=this displayedTimeline='userTimeline' }}
+        {{> tweetCard tweet=this displayedTimeline='userTimeline' }}
       {{/each}}
     </div>
   </div>
