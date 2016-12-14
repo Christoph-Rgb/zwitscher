@@ -1,5 +1,7 @@
 'use strict';
 
+//TODO: fix titles
+
 const User = require('../models/user');
 const Tweet = require('../models/tweet');
 const Joi = require('joi');
@@ -99,11 +101,34 @@ exports.deleteTweetGlobalTimeline = {
   },
 };
 
+exports.deleteMultipleTweetsGlobalTimeline = {
+
+  auth: {
+    scope: ['admin', 'user'],
+  },
+
+  handler: function (request, reply) {
+    deleteMultipleTweets('globalTimeline', request, reply);
+  },
+};
+
+exports.deleteMultipleTweetsUserTimeline = {
+
+  auth: {
+    scope: ['admin', 'user'],
+  },
+
+  handler: function (request, reply) {
+    deleteMultipleTweets('userTimeline', request, reply);
+  },
+};
+
 function showTimeline(timeline, request, reply) {
   const loggedInUserID = request.auth.credentials.loggedInUser;
   const loggedInUserScope = request.auth.credentials.scope;
   let viewedUserID;
   let tweetSearchOptions;
+  let title;
   if (timeline === 'userTimeline') {
     viewedUserID = request.params.id;
     tweetSearchOptions = { user: viewedUserID };
@@ -117,7 +142,7 @@ function showTimeline(timeline, request, reply) {
       getTweets(loggedInUserID, loggedInUserScope, tweetSearchOptions).then(tweets => {
 
         reply.view(timeline, {
-          title: viewedUser.firstName + 's Timeline',
+          title: 'Welcome to Zwitscher',
           user: viewedUser,
           loggedInUser: loggedInUser,
           canPost: loggedInUserID === viewedUserID,
@@ -146,7 +171,7 @@ function showTimelineWithErrors(timeline, request, reply, source, error) {
 
       //only loggedInUser can post on userTimeline => viewedUser == loggedInUser
       reply.view(timeline, {
-        title: loggedInUser.firstName + 's Timeline',
+        title: 'Error posting tweet',
         user: loggedInUser,
         loggedInUser: loggedInUser,
         canPost: true,
@@ -196,7 +221,6 @@ function postTweet(timeline, request, reply) {
 function deleteTweet(timeline, request, reply) {
   const loggedInUserID = request.auth.credentials.loggedInUser;
   const loggedInUserScope = request.auth.credentials.scope;
-  const viewedUserID = request.payload.viewedUserID;
   const tweetID = request.payload.tweetID;
 
   var redirectPath;
@@ -214,6 +238,33 @@ function deleteTweet(timeline, request, reply) {
         } else {
           console.log(loggedInUserID + ' does not have permissions to delete ' + tweetID);
         }
+      }).catch(err => { console.log(err.message); });
+
+  reply.redirect(redirectPath);
+}
+
+function deleteMultipleTweets(timeline, request, reply) {
+  const loggedInUserID = request.auth.credentials.loggedInUser;
+  const loggedInUserScope = request.auth.credentials.scope;
+  const tweetsToDelete = JSON.parse(request.payload.itemsToDelete);
+
+  var redirectPath;
+  if (timeline === 'userTimeline') {
+    redirectPath = '/' + timeline + '/' + loggedInUserID;
+  } else if (timeline === 'globalTimeline') {
+    redirectPath = '/' + timeline;
+  }
+
+  Tweet.find({ _id: { $in: tweetsToDelete } })
+      .then(tweets => {
+
+        tweets.forEach(tweet => {
+          if (loggedInUserScope === 'admin' || tweet.user.equals(loggedInUserID)) {
+            tweet.remove();
+          } else {
+            console.log(loggedInUserID + ' does not have permissions to delete tweet ' + tweet._id);
+          }
+        });
       }).catch(err => { console.log(err.message); });
 
   reply.redirect(redirectPath);

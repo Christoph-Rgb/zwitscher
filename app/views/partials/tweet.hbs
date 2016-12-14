@@ -1,4 +1,16 @@
 <div class="ui fluid raised card">
+  {{#if tweet.canDelete}}
+    <div class="extra content deleteSelector" style="display:none">
+      <div class="right floated">
+        <div class="field">
+          <div class="ui toggle checkbox">
+            <input id="{{tweet._id}}" class="deleteCheckbox" type="checkbox" name="test">
+            <label>Delete</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/if}}
   <div class="extra content">
     <div class="left floated author">
       <img class="ui avatar image" src="{{tweet.user.profilePicture}}"> {{tweet.user.firstName}} {{tweet.user.lastName}}

@@ -11,11 +11,19 @@
     </div>
   </div>
 
-    <div class="ui four wide column">
+  <div class="ui four wide column">
+    <div class="ui stackable cards">
+
+      {{> userButtonsCard }}
+      {{> deleteCard }}
+
       {{#with loggedInUser}}
         {{> userCard }}
       {{/with}}
-    </div>
 
+    </div>
+  </div>
 
 </section>
+
+<script src="/scripts/deleteMultipleItems.js"></script>

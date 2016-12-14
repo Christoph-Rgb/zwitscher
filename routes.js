@@ -21,10 +21,12 @@ module.exports = [
   { method: 'GET', path: '/globalTimeline', config: Tweets.showGlobalTimeline },
   { method: 'POST', path: '/globalTimeline/postTweet', config: Tweets.postTweetGlobalTimeline },
   { method: 'POST', path: '/globalTimeline/deleteTweet', config: Tweets.deleteTweetGlobalTimeline },
+  { method: 'POST', path: '/globalTimeline/deleteTweets', config: Tweets.deleteMultipleTweetsGlobalTimeline },
 
   { method: 'GET', path: '/userTimeline/{id}', config: Tweets.showUserTimeline },
   { method: 'POST', path: '/userTimeline/postTweet', config: Tweets.postTweetUserTimeline },
   { method: 'POST', path: '/userTimeline/deleteTweet', config: Tweets.deleteTweetUserTimeline },
+  { method: 'POST', path: '/userTimeline/deleteTweets', config: Tweets.deleteMultipleTweetsUserTimeline },
 
   {
     method: 'GET',

@@ -5,16 +5,23 @@
   <div class="ui eleven wide stacked column">
     {{> postTweet displayedTimeline='userTimeline' }}
     <div class="ui stackable two cards">
-    {{#each tweets }}
-      {{> tweet tweet=this displayedTimeline='userTimeline' }}
-    {{/each}}
+      {{#each tweets }}
+        {{> tweet tweet=this displayedTimeline='userTimeline' }}
+      {{/each}}
     </div>
   </div>
 
   <div class="ui four wide column">
-    {{#with user}}
-      {{> userCard }}
-    {{/with}}
+    <div class="ui stackable cards">
+      {{> userButtonsCard }}
+      {{> deleteCard }}
+
+      {{#with user}}
+        {{> userCard }}
+      {{/with}}
+    </div>
   </div>
 
 </section>
+
+<script src="/scripts/deleteMultipleItems.js"></script>
