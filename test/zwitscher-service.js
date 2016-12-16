@@ -49,6 +49,10 @@ class ZwitscherService {
     return this.httpService.delete('/api/tweets/' + id);
   }
 
+  deleteMultipleTweets(tweetsToDelete) {
+    return this.httpService.post('/api/deleteTweetsJob/' + tweetsToDelete);
+  }
+
   deleteAllTweets() {
     return this.httpService.delete('/api/tweets');
   }
