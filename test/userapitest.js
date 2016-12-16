@@ -122,6 +122,43 @@ suite('User API tests', function () {
     assert(zwitscherService.getUser(u._id) == null);
   });
 
+  test('delete multiple users as admin', function () {
+
+    zwitscherService.logout();
+    zwitscherService.login(adminUser);
+
+    const users = zwitscherService.getUsers();
+    assert.equal(users.length, 4);
+
+    let usersToDelete = [];
+    usersToDelete.push(users[1]._id);
+    usersToDelete.push(users[2]._id);
+    usersToDelete.push(users[3]._id);
+
+    zwitscherService.deleteMultipleUsers(JSON.stringify(usersToDelete));
+
+    const remainingUsers = zwitscherService.getUsers();
+
+    assert.equal(remainingUsers.length, 1);
+
+  });
+
+  test('delete multiple users without permission fails', function () {
+    const users = zwitscherService.getUsers();
+    assert.equal(users.length, 4);
+
+    let usersToDelete = [];
+    usersToDelete.push(users[2]._id);
+    usersToDelete.push(users[3]._id);
+
+    zwitscherService.deleteMultipleUsers(JSON.stringify(usersToDelete));
+
+    const remainingUsers = zwitscherService.getUsers();
+
+    assert.equal(remainingUsers.length, 4);
+
+  });
+
   test('delete all users as user without permission', function () {
     const code = zwitscherService.deleteAllUsers();
     assert.equal(code, 403);
