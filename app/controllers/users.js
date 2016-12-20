@@ -26,7 +26,7 @@ exports.users = {
               user.canDelete = true;
             }
 
-            Tweet.count({ user: user._id }).then(userTweetCount => {
+            return Tweet.count({ user: user._id }).then(userTweetCount => {
               user.tweetCount = userTweetCount;
               allUsers.push(user);
             }).catch(err => { console.log(err); });

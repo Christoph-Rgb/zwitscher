@@ -1,6 +1,7 @@
 'use strict';
 
 const User = require('../models/user');
+const Tweet = require('../models/tweet');
 const Boom = require('boom');
 const utils = require('./utils.js');
 
@@ -29,11 +30,18 @@ exports.findAllUsers = {
   },
 
   handler: function (request, reply) {
-    User.find({}).exec().then(users => {
-      reply(users);
-    }).catch(err => {
-      reply(Boom.badImplementation('error accessing db'));
-    });
+    let allUsers = [];
+    let userCursor = User.find({}).cursor();
+    userCursor.eachAsync((user) => {
+      return Tweet.count({ user: user._id }).then(userTweetCount => {
+        let leanUser = user.toObject();
+        leanUser.tweetCount = userTweetCount;
+        allUsers.push(leanUser);
+      }).catch(err => { reply(Boom.badImplementation('error accessing db: ' + err)); });
+    })
+    .then(() => {
+      reply(allUsers);
+    }).catch(err => { reply(Boom.badImplementation('error accessing db: ' + err)); });
   },
 
 };
@@ -45,12 +53,15 @@ exports.findOneUser = {
   },
 
   handler: function (request, reply) {
-    User.findOne({ _id: request.params.id }).then(user => {
+    User.findOne({ _id: request.params.id }).lean().then(user => {
       if (user != null) {
-        reply(user);
+        Tweet.count({ user: user._id }).then(userTweetCount => {
+          user.tweetCount = userTweetCount;
+          reply(user);
+        }).catch(err => { reply(Boom.badImplementation('error accessing db: ' + err)); });
+      } else {
+        reply(Boom.notFound('id not found'));
       }
-
-      reply(Boom.notFound('id not found'));
     }).catch(err => {
       reply(Boom.notFound('id not found'));
     });
@@ -67,7 +78,9 @@ exports.createUser = {
   handler: function (request, reply) {
     const user = new User(request.payload);
     user.save().then(newUser => {
-      reply(newUser).code(201);
+      let leanUser = newUser.toObject();
+      leanUser.tweetCount = 0;
+      reply(leanUser).code(201);
     }).catch(err => {
       reply(Boom.badImplementation('error creating User'));
     });
