@@ -10,6 +10,8 @@ module.exports = [
   { method: 'GET', path: '/home', config: Tweets.showGlobalTimeline },
 
   { method: 'GET', path: '/users', config: Users.users },
+  { method: 'POST', path: '/followUser', config: Users.followUser },
+  { method: 'POST', path: '/unfollowUser', config: Users.unfollowUser },
 
   { method: 'GET', path: '/signup', config: Accounts.signup },
   { method: 'POST', path: '/register', config: Accounts.register },

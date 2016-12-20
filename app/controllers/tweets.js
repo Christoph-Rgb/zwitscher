@@ -141,6 +141,19 @@ function showTimeline(timeline, request, reply) {
     getUser({ _id: viewedUserID }).then(viewedUser => {
       getTweets(loggedInUserID, loggedInUserScope, tweetSearchOptions).then(tweets => {
 
+        //TODO: sketchy
+        //check if loggedInUser is following viewedUser
+        var indexOfFollowing = loggedInUser.follows.findIndex(followedUserID => {
+          return viewedUser._id.equals(followedUserID);
+        });
+        if (indexOfFollowing !== -1) {
+          viewedUser.isFollowing = true;
+        }
+
+        //TODO: sketchy
+        //check if loggedInUser is current user
+        viewedUser.canFollow = !loggedInUser._id.equals(viewedUser._id);
+
         reply.view(timeline, {
           title: 'Welcome to Zwitscher',
           user: viewedUser,
@@ -274,14 +287,15 @@ function deleteMultipleTweets(timeline, request, reply) {
 
 function getUser(searchOptions) {
   return new Promise(function (resolve, reject) {
+
     User.findOne(searchOptions)
         .then(foundUser => {
           //add joinedString for displaying
           foundUser.joinedString = foundUser.joined.getFullYear();
 
           //add tweet count
-          Tweet.count({ user: foundUser._id }).then(userTweetCound => {
-            foundUser.tweetCount = userTweetCound;
+          Tweet.count({ user: foundUser._id }).then(userTweetCount => {
+            foundUser.tweetCount = userTweetCount;
 
             resolve(foundUser);
           }).catch(err => {

@@ -10,6 +10,12 @@ const userSchema = mongoose.Schema({
   profilePicture: String,
   gender: String,
   joined: Date,
+  follows: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
   scope: String,
 });
 

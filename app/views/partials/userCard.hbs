@@ -21,6 +21,15 @@
     </div>
   </div>
   <div class="extra content">
+    {{#if canFollow}}
+      <div class="left floated">
+        {{#if isFollowing}}
+          <i id="{{_id}}" class="yellow star icon unfollowIcon"></i>
+        {{else}}
+          <i id="{{_id}}" class="empty star icon followIcon"></i>
+        {{/if}}
+      </div>
+    {{/if}}
     <a class="right floated" href="/userTimeline/{{_id}}">
       {{tweetCount}}
       <i class="comments icon"></i>

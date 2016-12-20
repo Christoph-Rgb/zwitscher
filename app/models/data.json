@@ -19,6 +19,9 @@
       "gender": "M",
       "profilePicture": "/images/profilePictures/male1.jpg",
       "joined": "2016-12-05",
+      "follows": [
+        "->users.homer"
+      ],
       "scope": "user"
     },
     "marge": {
@@ -29,6 +32,10 @@
       "gender": "F",
       "profilePicture": "/images/profilePictures/female1.jpg",
       "joined": "2016-12-05",
+      "follows": [
+        "->users.homer",
+        "->users.christoph"
+      ],
       "scope": "user"
     },
     "bart": {
@@ -39,6 +46,11 @@
       "gender": "M",
       "profilePicture": "/images/profilePictures/male1.jpg",
       "joined": "2016-12-05",
+      "follows": [
+        "->users.homer",
+        "->users.christoph",
+        "->users.marge"
+      ],
       "scope": "user"
     }
   },
