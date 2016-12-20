@@ -1,6 +1,7 @@
 'use strict';
 
 const User = require('../models/user');
+const Tweet = require('../models/tweet');
 const Joi = require('joi');
 
 exports.users = {
@@ -14,26 +15,32 @@ exports.users = {
 
     User.findOne({ _id: loggedInUserID }).then(loggedInUser => {
 
-      User.find({}).then(allUsers => {
+      Tweet.count({ user: loggedInUserID }).then(loggedInUserTweetCount => {
+        loggedInUser.tweetCount = loggedInUserTweetCount;
 
-              allUsers.forEach(user => {
-                user.joinedString = user.joined.getFullYear();
-                if (loggedInUser.scope === 'admin' && !user._id.equals(loggedInUser._id)) {
-                  user.canDelete = true;
-                }
-              });
+        let allUsers = [];
+        const userCursor = User.find({}).cursor();
+        userCursor.eachAsync(user => {
+            user.joinedString = user.joined.getFullYear();
+            if (loggedInUser.scope === 'admin' && !user._id.equals(loggedInUser._id)) {
+              user.canDelete = true;
+            }
 
-              reply.view('users', {
-                title: 'Zwitscher home',
-                users: allUsers,
-                loggedInUser: loggedInUser,
-                isAdmin: loggedInUser.scope === 'admin',
-              });
-
-            })
-            .catch(err => {});
-    })
-    .catch(err => {});
+            Tweet.count({ user: user._id }).then(userTweetCount => {
+              user.tweetCount = userTweetCount;
+              allUsers.push(user);
+            }).catch(err => { console.log(err); });
+          })
+        .then(() => {
+            reply.view('users', {
+              title: 'Zwitscher home',
+              users: allUsers,
+              loggedInUser: loggedInUser,
+              isAdmin: loggedInUser.scope === 'admin',
+            });
+          }).catch(err => { console.log(err); });
+      }).catch(err => { console.log(err); });
+    }).catch(err => { console.log(err); });
   },
 
 };

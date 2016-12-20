@@ -276,7 +276,15 @@ function getUser(searchOptions) {
         .then(foundUser => {
           //add joinedString for displaying
           foundUser.joinedString = foundUser.joined.getFullYear();
-          resolve(foundUser);
+
+          //add tweet count
+          Tweet.count({ user: foundUser._id }).then(userTweetCound => {
+            foundUser.tweetCount = userTweetCound;
+
+            resolve(foundUser);
+          }).catch(err => {
+            reject(err);
+          });
         })
         .catch(err => {
           reject(err);
