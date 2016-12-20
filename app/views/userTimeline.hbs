@@ -13,8 +13,10 @@
 
   <div class="ui four wide column">
     <div class="ui stackable cards">
-      {{> userButtonsCard }}
-      {{> deleteCard }}
+      {{#if showUserButtons}}
+        {{> userButtonsCard }}
+        {{> deleteCard }}
+      {{/if}}
 
       {{#with user}}
         {{> userCard }}

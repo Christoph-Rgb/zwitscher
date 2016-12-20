@@ -146,6 +146,7 @@ function showTimeline(timeline, request, reply) {
           user: viewedUser,
           loggedInUser: loggedInUser,
           canPost: loggedInUserID === viewedUserID,
+          showUserButtons: (loggedInUserID === viewedUserID || loggedInUser.scope === 'admin'),
           tweets: tweets,
         });
 
@@ -175,6 +176,7 @@ function showTimelineWithErrors(timeline, request, reply, source, error) {
         user: loggedInUser,
         loggedInUser: loggedInUser,
         canPost: true,
+        showUserButtons: true,
         tweets: tweets,
         tweetMessage: tweetMessage,
         errors: error.data.details,
