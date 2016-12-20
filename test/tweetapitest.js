@@ -61,7 +61,7 @@ suite('Tweet API tests', function () {
       message: newTweet.message,
     };
 
-    fs.readFile('public/images/profilePictures/male1.jpg', (err, data) => {
+    fs.readFile('../public/images/profilePictures/male1.jpg', (err, data) => {
       tweetWithPicture.image = new Buffer(data).toString('base64');
 
       const returnedTweet = zwitscherService.postTweet(tweetWithPicture);
