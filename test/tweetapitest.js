@@ -61,7 +61,7 @@ suite('Tweet API tests', function () {
       message: newTweet.message,
     };
 
-    fs.readFile('../public/images/profilePictures/male1.jpg', (err, data) => {
+    fs.readFile('public/images/profilePictures/male1.jpg', (err, data) => {
       tweetWithPicture.image = new Buffer(data).toString('base64');
 
       const returnedTweet = zwitscherService.postTweet(tweetWithPicture);
@@ -130,6 +130,27 @@ suite('Tweet API tests', function () {
     assert(zwitscherService.getTweet(tweet._id) != null);
     zwitscherService.deleteOneTweet(tweet._id);
     assert(zwitscherService.getTweet(tweet._id) == null);
+  });
+
+  test('delete multiple tweets', function () {
+
+    zwitscherService.logout();
+    zwitscherService.login(user);
+
+    const tweets = zwitscherService.getAllTweets();
+    assert.equal(tweets.length, 4);
+
+    let tweetsToDelete = [];
+    tweetsToDelete.push(tweets[0]._id);
+    tweetsToDelete.push(tweets[1]._id);
+    tweetsToDelete.push(tweets[2]._id);
+
+    zwitscherService.deleteMultipleTweets(JSON.stringify(tweetsToDelete));
+
+    const remainingTweets = zwitscherService.getAllTweets();
+
+    assert.equal(remainingTweets.length, 1);
+
   });
 
   test('get all tweets', function () {

@@ -129,3 +129,22 @@ exports.deleteOneUser = {
   },
 
 };
+
+exports.deleteMultipleUsers = {
+
+  auth: {
+    strategy: 'jwt',
+    scope: ['admin'],
+  },
+
+  handler: function (request, reply) {
+    const usersToDelete = JSON.parse(request.params.usersToDelete);
+
+    User.remove({ _id: { $in: usersToDelete } }).then((result, users) => {
+      reply(result.result).code(204);
+    }).catch(err => {
+      reply(Boom.notFound('one or more IDs not found'));
+    });
+  },
+
+};

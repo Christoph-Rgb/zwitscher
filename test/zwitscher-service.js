@@ -29,6 +29,10 @@ class ZwitscherService {
     return this.httpService.delete('/api/users/' + id);
   }
 
+  deleteMultipleUsers(usersToDelete) {
+    return this.httpService.post('/api/deleteUsersJob/' + usersToDelete);
+  }
+
   getTweet(id) {
     return this.httpService.get('/api/tweets/' + id);
   }
@@ -47,6 +51,10 @@ class ZwitscherService {
 
   deleteOneTweet(id) {
     return this.httpService.delete('/api/tweets/' + id);
+  }
+
+  deleteMultipleTweets(tweetsToDelete) {
+    return this.httpService.post('/api/deleteTweetsJob/' + tweetsToDelete);
   }
 
   deleteAllTweets() {

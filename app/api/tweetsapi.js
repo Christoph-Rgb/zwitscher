@@ -170,6 +170,25 @@ exports.deleteOneTweet = {
 
 };
 
+exports.deleteMultipleTweets = {
+
+  auth: {
+    strategy: 'jwt',
+    scope: ['user', 'admin'],
+  },
+
+  handler: function (request, reply) {
+    const tweetsToDelete = JSON.parse(request.params.tweetsToDelete);
+
+    Tweet.remove({ _id: { $in: tweetsToDelete } }).then((result, tweets) => {
+      reply(result.result).code(204);
+    }).catch(err => {
+      reply(Boom.notFound('one or more IDs not found'));
+    });
+  },
+
+};
+
 function uploadFile(file, contents, callback) {
   // open write stream
   var stream = file.createWriteStream({
