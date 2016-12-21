@@ -37,9 +37,15 @@ exports.users = {
             //check if loggedInUser is current user
             user.canFollow = !loggedInUser._id.equals(user._id);
 
-            return Tweet.count({ user: user._id }).then(userTweetCount => {
+            Tweet.count({ user: user._id }).then(userTweetCount => {
               user.tweetCount = userTweetCount;
-              allUsers.push(user);
+
+              //add follower count
+              return User.count({ follows: user._id }).then(followerCount => {
+                user.followerCount = followerCount;
+                allUsers.push(user);
+
+              }).catch(err => { console.log(err); });
             }).catch(err => { console.log(err); });
           })
         .then(() => {

@@ -302,7 +302,15 @@ function getUser(searchOptions) {
           Tweet.count({ user: foundUser._id }).then(userTweetCount => {
             foundUser.tweetCount = userTweetCount;
 
-            resolve(foundUser);
+            //add follower count
+            User.count({ follows: foundUser._id }).then(followerCount => {
+
+              foundUser.followerCount = followerCount;
+              resolve(foundUser);
+
+            }).catch(err => {
+              reject(err);
+            });
           }).catch(err => {
             reject(err);
           });
