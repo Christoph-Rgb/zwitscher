@@ -148,3 +148,55 @@ exports.deleteMultipleUsers = {
   },
 
 };
+
+exports.followUser = {
+
+  auth: {
+    strategy: 'jwt',
+    scope: ['admin', 'user'],
+  },
+
+  handler: function (request, reply) {
+    const loggedInUserID = request.auth.credentials.id;
+    const userToFollowID = request.params.id;
+
+    User.findOne({ _id: loggedInUserID }).then(loggedInUser => {
+      loggedInUser.follows.push(userToFollowID);
+      loggedInUser.save().then(user => {
+
+        reply(user).code(201);
+
+      }).catch(err => {
+        reply(Boom.notFound('user not updated'));
+      });
+    }).catch(err => {
+      reply(Boom.notFound('user not found'));
+    });
+  },
+};
+
+exports.unfollowUser = {
+
+  auth: {
+    strategy: 'jwt',
+    scope: ['admin', 'user'],
+  },
+
+  handler: function (request, reply) {
+    const loggedInUserID = request.auth.credentials.id;
+    const userToUnfollowID = request.params.id;
+
+    User.findOne({ _id: loggedInUserID }).then(loggedInUser => {
+
+      const indexToRemove = loggedInUser.follows.indexOf(userToUnfollowID);
+      if (indexToRemove !== -1) {
+        loggedInUser.follows.splice(indexToRemove, 1);
+        loggedInUser.save().then(user => {
+
+          reply(user).code(201);
+
+        }).catch(err => { reply(Boom.notFound('user not updated')); });
+      }
+    }).catch(err => { reply(Boom.notFound('user not found')); });
+  },
+};

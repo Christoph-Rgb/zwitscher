@@ -44,7 +44,7 @@ exports.findOneTweet = {
 
 };
 
-exports.findAllTweetsForUser = {
+exports.findAllTweetsByUser = {
 
   auth: {
     strategy: 'jwt',
@@ -60,6 +60,32 @@ exports.findAllTweetsForUser = {
       }
     }).catch(err => {
       reply(Boom.notFound('id not found'));
+    });
+  },
+
+};
+
+exports.findAllTweetsForUser = {
+
+  auth: {
+    strategy: 'jwt',
+    scope: ['user', 'admin'],
+  },
+
+  handler: function (request, reply) {
+
+    User.findOne({ _id: request.params.id }).then(user => {
+      Tweet.find({ $or: [{ user: user._id }, { user: { $in: user.follows } }] }).then(tweets => {
+        if (tweets != null) {
+          reply(tweets);
+        } else {
+          reply(Boom.notFound('tweets not found'));
+        }
+      }).catch(err => {
+        reply(Boom.notFound('tweets not found'));
+      });
+    }).catch(err => {
+      reply.Boom.notFound('user not found');
     });
   },
 

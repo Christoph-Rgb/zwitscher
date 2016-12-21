@@ -45,20 +45,30 @@ suite('User API tests', function () {
     const returnedUser = zwitscherService.createUser(newUser);
     assert(_.some([returnedUser], newUser), 'returnedUser must be a superset of newUser');
     assert.isDefined(returnedUser._id);
-
-    zwitscherService.logout();
-    zwitscherService.login(adminUser);
-    zwitscherService.deleteOneUser(returnedUser._id);
   });
 
   test('get user', function () {
     const user1 = zwitscherService.createUser(newUser);
     const user2 = zwitscherService.getUser(user1._id);
     assert.deepEqual(user1, user2);
+  });
 
-    zwitscherService.logout();
-    zwitscherService.login(adminUser);
-    zwitscherService.deleteOneUser(user1._id);
+  test('follow another user', function () {
+    const allUsers = zwitscherService.getUsers();
+    const followingUser = zwitscherService.followUser(allUsers[0]._id);
+
+    assert.equal(followingUser.follows.length, 1);
+    assert.equal(followingUser.follows[0], allUsers[0]._id);
+  });
+
+  test('unfollow another user', function () {
+    const allUsers = zwitscherService.getUsers();
+    const followingUser = zwitscherService.followUser(allUsers[0]._id);
+    assert.equal(followingUser.follows.length, 1);
+    assert.equal(followingUser.follows[0], allUsers[0]._id);
+
+    const unfollowingUser = zwitscherService.unfollowUser(allUsers[0]._id);
+    assert.equal(unfollowingUser.follows.length, 0);
   });
 
   test('get all users', function () {

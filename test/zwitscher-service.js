@@ -17,6 +17,14 @@ class ZwitscherService {
     return this.httpService.get('/api/users/' + id);
   }
 
+  followUser(id) {
+    return this.httpService.post('/api/users/' + id + '/follow');
+  }
+
+  unfollowUser(id) {
+    return this.httpService.post('/api/users/' + id + '/unfollow');
+  }
+
   createUser(newUser) {
     return this.httpService.post('/api/users', newUser);
   }
@@ -41,8 +49,12 @@ class ZwitscherService {
     return this.httpService.get('/api/tweets');
   }
 
-  getAllTweetsForUser(id) {
+  getAllTweetsByUser(id) {
     return this.httpService.get('/api/users/' + id + '/tweets');
+  }
+
+  getAllTweetsForUser(id) {
+    return this.httpService.get('/api/tweets/users/' + id);
   }
 
   postTweet(newTweet) {

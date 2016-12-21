@@ -72,19 +72,6 @@ suite('Tweet API tests', function () {
 
       done();
     });
-
-    // fs.readFile('//D:/_images/profilePictures/male1.jpg', function (err, data) {
-    //   if (err) throw err; // Fail if the file can't be read.
-    //
-    //   newTweet.image = data;
-    //
-    //   const returnedTweet = zwitscherService.postTweet(newTweet);
-    //   assert(_.some([returnedTweet], newTweet), 'returnedTweet must be a superset of newTweet');
-    //   assert.isDefined(returnedTweet._id);
-    //
-    //   done();
-    // });
-
   });
 
   test('post a tweet with invalid picture', function () {
@@ -207,17 +194,9 @@ suite('Tweet API tests', function () {
     assert(code, 403);
   });
 
-  test('get all tweets from user', function () {
+  test('get all tweets by user', function () {
     zwitscherService.logout();
     zwitscherService.login(user);
-
-    // const createdUser = zwitscherService.createUser(user);
-    // zwitscherService.logout();
-    // zwitscherService.login(createdUser);
-    //
-    // tweets.forEach(tweet => {
-    //   zwitscherService.postTweet(tweet);
-    // })
 
     const allUsers = zwitscherService.getUsers();
     let userID;
@@ -226,8 +205,36 @@ suite('Tweet API tests', function () {
         userID = currentUser._id;
       }
     });
-    const allTweets = zwitscherService.getAllTweetsForUser(userID);
+    const allTweets = zwitscherService.getAllTweetsByUser(userID);
 
     assert.equal(allTweets.length, tweets.length);
+  });
+
+  test('get all tweets for user', function () {
+    zwitscherService.logout();
+    zwitscherService.login(adminUser);
+    zwitscherService.postTweet(newTweet);
+
+    const allUsers = zwitscherService.getUsers();
+    zwitscherService.followUser(allUsers[1]._id);
+
+    const allTweets = zwitscherService.getAllTweetsForUser(allUsers[0]._id);
+
+    assert.equal(allTweets.length, tweets.length + 1);
+  });
+
+  test('get all tweets for not following user', function () {
+    zwitscherService.logout();
+    zwitscherService.login(adminUser);
+    zwitscherService.postTweet(newTweet);
+
+    const allUsers = zwitscherService.getUsers();
+
+    zwitscherService.logout();
+    zwitscherService.login(user);
+
+    const allTweets = zwitscherService.getAllTweetsForUser(allUsers[1]._id);
+
+    assert.equal(allTweets.length, 4);
   });
 });
