@@ -25,13 +25,13 @@ exports.postTweetUserTimeline = {
   },
 
   payload: {
-    maxBytes: 1000000,
+    maxBytes: 10000000,
   },
 
   validate: {
     payload: {
       tweetMessage: Joi.string().required(),
-      tweetImage: Joi.optional(),
+      tweetImage: Joi.object().max(1000000).optional(),
     },
     failAction: function (request, reply, source, error) {
       showTimelineWithErrors('userTimeline', request, reply, source, error);
@@ -72,13 +72,13 @@ exports.postTweetGlobalTimeline = {
   },
 
   payload: {
-    maxBytes: 1000000,
+    maxBytes: 10000000,
   },
 
   validate: {
     payload: {
       tweetMessage: Joi.string().required(),
-      tweetImage: Joi.optional(),
+      tweetImage: Joi.object().max(1000000).optional(),
     },
     failAction: function (request, reply, source, error) {
       showTimelineWithErrors('globalTimeline', request, reply, source, error);

@@ -93,6 +93,10 @@ exports.logout = {
 exports.register = {
   auth: false,
 
+  payload: {
+    maxBytes: 10000000,
+  },
+
   validate: {
 
     payload: {
@@ -100,7 +104,9 @@ exports.register = {
       lastName: Joi.string().required(),
       email: Joi.string().email().required(),
       gender: Joi.string().required(),
-      profileImage: Joi.optional(),
+      profileImage: Joi.object().max(1000000).optional(),
+
+      // profileImage: Joi.object().max(1000000).options({ language: { any: { allowOnly: 'Image size must be less than 1MB' }, label: 'Profile Image' } }).optional(),
 
       //TODO: change to min 6
       password: Joi.string().min(1).max(15).required(),
