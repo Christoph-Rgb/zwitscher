@@ -294,63 +294,96 @@ function uploadFileToFirebase(file, contentType, contents, callback) {
   stream.end(contents);
 }
 
-// exports.viewSettings = {
-//
-//   handler: function (request, reply) {
-//     var userEmail = request.auth.credentials.loggedInUser;
-//     User.findOne({ email: userEmail }).then(foundUser => {
-//       reply.view('settings', { title: 'Edit Account Settings', user: foundUser });
-//     }).catch(err => {
-//       reply.redirect('/');
-//     });
-//   },
-//
-// };
-//
-// exports.updateSettings = {
-//
-//   validate: {
-//
-//     payload: {
-//       firstName: Joi.string().required(),
-//       lastName: Joi.string().required(),
-//       email: Joi.string().email().required(),
-//
-//       //TODO: change to min 6
-//       password: Joi.string().min(1).max(15).required(),
-//       passwordConfirm: Joi.any().valid(Joi.ref('password'))
-// .required().options({ language: { any: { allowOnly: 'must match password' } } }),
-//     },
-//
-//     failAction: function (request, reply, source, error) {
-//       reply.view('settings', {
-//         title: 'Update settings error',
-//         errors: error.data.details,
-//         user: request.payload,
-//       }).code(400);
-//     },
-//
-//     options: {
-//       abortEarly: false,
-//     },
-//
-//   },
-//
-//   handler: function (request, reply) {
-//     const editedUser = request.payload;
-//     const loggedInUserEmail = request.auth.credentials.loggedInUser;
-//
-//     User.findOne({ email: loggedInUserEmail }).then(user => {
-//       user.firstName = editedUser.firstName;
-//       user.lastName = editedUser.lastName;
-//       user.email = editedUser.email;
-//       user.password = editedUser.password;
-//       return user.save();
-//     }).then(user => {
-//       reply.view('settings', { title: 'Edit Account Settings', user: user });
-//     }).catch(err => {
-//       reply.redirect('/');
-//     });
-//   },
-//
-// };
+exports.viewSettings = {
+
+  handler: function (request, reply) {
+    const loggedInUserID = request.auth.credentials.loggedInUser;
+
+    User.findOne({ _id: loggedInUserID }).then(foundUser => {
+      reply.view('settings', { title: 'Edit Account Settings', loggedInUser: foundUser });
+    }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+
+};
+
+exports.updateSettings = {
+
+  payload: {
+    maxBytes: 10000000,
+  },
+
+  validate: {
+
+    payload: {
+      firstName: Joi.string().required(),
+      lastName: Joi.string().required(),
+      gender: Joi.string().required(),
+      email: Joi.string().email().required(),
+      profileImage: Joi.object().max(1000000).optional(),
+      // profileImage: Joi.object().optional(),
+      oldPassward: Joi.string().required(),
+
+      //TODO: change to min 6
+      password: Joi.string().min(1).max(15).required(),
+      passwordConfirm: Joi.any().valid(Joi.ref('password'))
+        .required().options({ language: { any: { allowOnly: 'must match password' } } }),
+    },
+
+    failAction: function (request, reply, source, error) {
+      const loggedInUserID = request.auth.credentials.loggedInUser;
+      User.findOne({ _id: loggedInUserID }).then(loggedInUser => {
+        reply.view('settings', {
+          title: 'Update settings error',
+          errors: error.data.details,
+          loggedInUser: loggedInUser,
+        }).code(400);
+      }).catch(err => { console.log(err); });
+    },
+
+    options: {
+      abortEarly: false,
+    },
+
+  },
+
+  handler: function (request, reply) {
+    const editedUser = request.payload;
+    const oldPassword = request.payload.oldPassward;
+    const loggedInUserID = request.auth.credentials.loggedInUser;
+
+    User.findOne({ _id: loggedInUserID }).then(user => {
+      if (user.password === oldPassword) {
+
+        user.firstName = editedUser.firstName;
+        user.lastName = editedUser.lastName;
+        user.gender = editedUser.gender;
+        user.email = editedUser.email;
+        user.password = editedUser.password;
+
+        if (!editedUser.profileImage || !editedUser.profileImage.length) {
+          user.save().then(savedUser => {
+            reply.view('settings', { title: 'Edit Account Settings', loggedInUser: savedUser });
+          });
+        } else {
+          uploadImage(user._id, editedUser.profileImage).then(imageUrl => {
+            user.profilePicture = imageUrl;
+            return user.save().then(savedUser => {
+              reply.view('settings', { title: 'Edit Account Settings', loggedInUser: savedUser });
+            });
+          }).catch(err => { reply.redirect('/'); });
+        }
+      } else {
+        reply.view('settings', {
+          title: 'Update settings error',
+          errors: [{ message: 'Old password incorect' }],
+          loggedInUser: user,
+        }).code(400);
+      }
+    }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+
+};

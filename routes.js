@@ -18,6 +18,8 @@ module.exports = [
   { method: 'GET', path: '/login', config: Accounts.login },
   { method: 'POST', path: '/login', config: Accounts.authenticate },
   { method: 'GET', path: '/logout', config: Accounts.logout },
+  { method: 'GET', path: '/settings', config: Accounts.viewSettings },
+  { method: 'POST', path: '/settings', config: Accounts.updateSettings },
   { method: 'POST', path: '/users/removeUser', config: Accounts.removeUser },
   { method: 'POST', path: '/users/removeUsers', config: Accounts.removeMultipleUsers },
 

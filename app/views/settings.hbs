@@ -1,43 +1,73 @@
-{{> mainmenu _id='settings'}}
+{{> mainmenu }}
 
-<section class="ui raised segment">
-    <div class="ui grid">
-        <div class="ui ten wide column">
-            <div class="ui stacked fluid form segment">
-                <form action="/settings" method="POST">
-                    <h3 class="ui header">Settings</h3>
-                    <div class="two fields">
-                        <div class="field">
-                            <label>First Name</label>
-                            <input placeholder="First Name" type="text" name="firstName" value="{{user.firstName}}">
-                        </div>
-                        <div class="field">
-                            <label>Last Name</label>
-                            <input placeholder="Last Name" type="text" name="lastName" value = "{{user.lastName}}">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Email</label>
-                        <input placeholder="Email" type="text" name="email" value = "{{user.email}}">
-                    </div>
-                    <!--<div class="field">-->
-                        <!--<label>Password</label>-->
-                        <!--<input type="password" name="password" value = "{{user.password}}">-->
-                    <!--</div>-->
-                  <div class="field">
-                    <label>Password</label>
-                    <div class="two fields">
-                      <input id="password" placeholder="Password" type="password" name="password">
-                      <input id="passwordConfirm" placeholder="Confirm Password" type="password" name="passwordConfirm">
-                    </div>
-                  </div>
-                    <button class="ui blue submit button">Save</button>
-                </form>
-                {{> formerror}}
+<section class="ui basic segment">
+  <div class="ui middle aligned center aligned grid">
+    <aside class="ui six wide column">
+      <img src="{{loggedInUser.profilePicture}}" class="ui medium image">
+    </aside>
+    <div class="ui six wide column">
+      <!--<div class="ui stacked fluid form segment">-->
+      <div class="ui stacked fluid segment">
+        <form class="ui form" id="profileForm" action="/settings" method="POST" enctype='multipart/form-data'>
+          <h3 class="ui header">Edit Account</h3>
+          <div class="two fields">
+            <div class="field">
+              <label>First Name</label>
+              <input placeholder="First Name" type="text" name="firstName" value="{{loggedInUser.firstName}}">
             </div>
-        </div>
-        <aside class="ui five wide column">
-            <img src="images/homer3.png" class="ui medium image">
-        </aside>
+            <div class="field">
+              <label>Last Name</label>
+              <input placeholder="Last Name" type="text" name="lastName" value="{{loggedInUser.lastName}}">
+            </div>
+          </div>
+          <div class="field">
+            <label>Gender</label>
+            <select class="ui dropdown" name="gender">
+              {{#select loggedInUser.gender}}
+                <option value="M">male</option>
+                <option value="W">female</option>
+              {{/select}}
+            </select>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input placeholder="Email" type="text" name="email" value="{{loggedInUser.email}}">
+          </div>
+          <div class="field">
+            <label>Old Password</label>
+            <input id="password" placeholder="Old Password" type="password" name="oldPassward">
+          </div>
+          <div class="field">
+            <label>New Password</label>
+            <div class="two fields">
+              <div class="field">
+                <input id="password" placeholder="Password" type="password" name="password">
+              </div>
+              <div class="field">
+                <input id="passwordConfirm" placeholder="Confirm Password" type="password" name="passwordConfirm">
+              </div>
+            </div>
+          </div>
+
+          <div class="ui basic centered fluid segment" id="imageSegment" style="display:none">
+            <img class="ui rounded image" id="imagePreview" src="">
+          </div>
+
+          <div class="two fields">
+            <div class="field">
+              <div class="ui icon button" id="camerabutton">
+                <i class="camera icon"></i>
+              </div>
+              <input type="file" name="profileImage" id="fileInput" accept="image/*"  style="display:none">
+            </div>
+            <div class="field">
+              <button class="ui brown submit button">Save</button>
+            </div>
+          </div>
+        </form>
+        {{> formerror}}
+      </div>
     </div>
+  </div>
 </section>
+<script src="/scripts/profileForm.js"></script>
