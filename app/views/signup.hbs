@@ -7,8 +7,8 @@
     </aside>
     <div class="ui six wide column">
         <!--<div class="ui stacked fluid form segment">-->
-        <div class="ui form stacked fluid form segment">
-            <form id="signupForm" action="/register" method="POST">
+        <div class="ui stacked fluid segment">
+            <form class="ui form" id="signupForm" action="/register" method="POST" enctype='multipart/form-data'>
                 <h3 class="ui header">Register</h3>
                 <div class="two fields">
                     <div class="field">
@@ -44,10 +44,26 @@
                     </div>
                   </div>
                 </div>
-                <button class="ui brown submit button">Signup</button>
+
+                <div class="ui basic centered fluid segment" id="imageSegment" style="display:none">
+                  <img class="ui rounded image" id="imagePreview" src="">
+                </div>
+
+                <div class="two fields">
+                  <div class="field">
+                    <div class="ui icon button" id="camerabutton">
+                      <i class="camera icon"></i>
+                    </div>
+                    <input type="file" name="profileImage" id="fileInput" accept="image/*"  style="display:none">
+                  </div>
+                  <div class="field">
+                    <button class="ui brown submit button">Signup</button>
+                  </div>
+                </div>
             </form>
             {{> formerror}}
         </div>
     </div>
   </div>
 </section>
+<script src="/scripts/signup.js"></script>

@@ -2,6 +2,7 @@
 
 const User = require('../models/user');
 const Joi = require('joi');
+const GCloud = require('gcloud');
 
 exports.main = {
   auth: false,
@@ -99,6 +100,7 @@ exports.register = {
       lastName: Joi.string().required(),
       email: Joi.string().email().required(),
       gender: Joi.string().required(),
+      profileImage: Joi.optional(),
 
       //TODO: change to min 6
       password: Joi.string().min(1).max(15).required(),
@@ -124,6 +126,7 @@ exports.register = {
   },
 
   handler: function (request, reply) {
+    const profileImage = request.payload.profileImage;
     const user = new User(request.payload);
     user.scope = 'user';
     user.joined = new Date();
@@ -134,12 +137,21 @@ exports.register = {
     }
 
     user.save().then(newUser => {
-      reply.redirect('/login');
+      if (profileImage && profileImage.length) {
+        //image needs to be uploaded
+        uploadImage(newUser._id, profileImage).then(imageUrl => {
+          newUser.profilePicture = imageUrl;
+          newUser.save().then(() => {
+            reply.redirect('/login');
+          }).catch(err => { reply.redirect('/'); });
+        }).catch(err => { reply.redirect('/'); });
+      } else {
+        reply.redirect('/login');
+      }
     }).catch(err => {
       reply.redirect('/');
     });
   },
-
 };
 
 exports.removeUser = {
@@ -222,6 +234,59 @@ exports.removeMultipleUsers = {
   },
 
 };
+
+function uploadImage(userID, tweetImage) {
+  return new Promise(function (resolve, reject) {
+    //create firebase storage ref
+    var storage = GCloud.storage({
+      projectId: 'glowing-fire-9226',
+      keyFilename: ('gcloudKeyFile.json'),
+    });
+
+    //create bucket ref
+    var bucket = storage.bucket('glowing-fire-9226.appspot.com');
+
+    //create ref to new file in bucket
+    const fileName = userID + '/' + new Date().getTime();
+    const newFile = bucket.file(fileName);
+
+    uploadFileToFirebase(newFile, 'image/jpeg', tweetImage, function (err) {
+      if (!err) {
+        //return the url of the created file
+        bucket.file(fileName).getSignedUrl({
+          action: 'read',
+          expires: '08-12-2025',
+        }, function (err, url) {
+          if (!err) {
+            resolve(url);
+          } else {
+            reject(err);
+          }
+        });
+      } else {
+        reject(err);
+      }
+    });
+  });
+}
+
+function uploadFileToFirebase(file, contentType, contents, callback) {
+  // open write stream
+  var stream = file.createWriteStream({
+    metadata: {
+      contentType: contentType,
+    },
+  });
+
+  // if there is an error signal back
+  stream.on('error', callback);
+
+  // if everything is successfull signal back
+  stream.on('finish', callback);
+
+  // send the contents
+  stream.end(contents);
+}
 
 // exports.viewSettings = {
 //
