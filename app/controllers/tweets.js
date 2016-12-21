@@ -128,7 +128,7 @@ function showTimeline(timeline, request, reply) {
   const loggedInUserScope = request.auth.credentials.scope;
   let viewedUserID;
   let tweetSearchOptions;
-  let title;
+
   if (timeline === 'userTimeline') {
     viewedUserID = request.params.id;
     tweetSearchOptions = { user: viewedUserID };
@@ -139,20 +139,25 @@ function showTimeline(timeline, request, reply) {
 
   getUser({ _id: loggedInUserID }).then(loggedInUser => {
     getUser({ _id: viewedUserID }).then(viewedUser => {
+
+      //TODO: sketchy
+      //check if loggedInUser is following viewedUser
+      var indexOfFollowing = loggedInUser.follows.findIndex(followedUserID => {
+        return viewedUser._id.equals(followedUserID);
+      });
+      if (indexOfFollowing !== -1) {
+        viewedUser.isFollowing = true;
+      }
+
+      //TODO: sketchy
+      //check if loggedInUser is current user
+      viewedUser.canFollow = !loggedInUser._id.equals(viewedUser._id);
+
+      if (timeline === 'globalTimeline') {
+        tweetSearchOptions = { $or: [{ user: loggedInUser._id }, { user: { $in: loggedInUser.follows } }] };
+      }
+
       getTweets(loggedInUserID, loggedInUserScope, tweetSearchOptions).then(tweets => {
-
-        //TODO: sketchy
-        //check if loggedInUser is following viewedUser
-        var indexOfFollowing = loggedInUser.follows.findIndex(followedUserID => {
-          return viewedUser._id.equals(followedUserID);
-        });
-        if (indexOfFollowing !== -1) {
-          viewedUser.isFollowing = true;
-        }
-
-        //TODO: sketchy
-        //check if loggedInUser is current user
-        viewedUser.canFollow = !loggedInUser._id.equals(viewedUser._id);
 
         reply.view(timeline, {
           title: 'Welcome to Zwitscher',
