@@ -74,8 +74,8 @@ exports.findAllTweetsForUser = {
 
   handler: function (request, reply) {
 
-    User.findOne({ _id: request.params.id }).populate('user').then(user => {
-      Tweet.find({ $or: [{ user: user._id }, { user: { $in: user.follows } }] }).then(tweets => {
+    User.findOne({ _id: request.params.id }).then(user => {
+      Tweet.find({ $or: [{ user: user._id }, { user: { $in: user.follows } }] }).populate('user').then(tweets => {
         if (tweets != null) {
           reply(tweets);
         } else {
