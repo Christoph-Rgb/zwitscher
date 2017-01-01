@@ -71,12 +71,17 @@ exports.findOneUser = {
 
 exports.createUser = {
 
-  auth: {
-    strategy: 'jwt',
-  },
-
+  auth: false,
   handler: function (request, reply) {
     const user = new User(request.payload);
+    user.scope = 'user';
+    user.joined = new Date();
+    if (user.gender === 'M') {
+      user.profilePicture = '/images/profilePictures/male1.jpg';
+    } else {
+      user.profilePicture = '/images/profilePictures/female1.jpg';
+    }
+
     user.save().then(newUser => {
       let leanUser = newUser.toObject();
       leanUser.tweetCount = 0;
