@@ -77,9 +77,11 @@ exports.createUser = {
     user.scope = 'user';
     user.joined = new Date();
     if (user.gender === 'M') {
-      user.profilePicture = '/images/profilePictures/male1.jpg';
+      // user.profilePicture = '/images/profilePictures/male1.jpg';
+      user.profilePicture = 'https://firebasestorage.googleapis.com/v0/b/glowing-fire-9226.appspot.com/o/profilePictures%2Fmale1.jpg?alt=media&token=f629f395-0c34-4bf9-b082-6a7f02b21fe1';
     } else {
-      user.profilePicture = '/images/profilePictures/female1.jpg';
+      // user.profilePicture = '/images/profilePictures/female1.jpg';
+      user.profilePicture = 'https://firebasestorage.googleapis.com/v0/b/glowing-fire-9226.appspot.com/o/profilePictures%2Ffemale1.jpg?alt=media&token=041d3eed-5792-4912-9fa1-aa82126453be';
     }
 
     user.save().then(newUser => {
