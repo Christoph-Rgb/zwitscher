@@ -14,7 +14,7 @@ exports.findAllTweets = {
   },
 
   handler: function (request, reply) {
-    Tweet.find({}).exec().then(tweets => {
+    Tweet.find({}).populate('user').then(tweets => {
       reply(tweets);
     }).catch(err => {
       reply(Boom.badImplementation('error accessing db'));
@@ -31,7 +31,7 @@ exports.findOneTweet = {
   },
 
   handler: function (request, reply) {
-    Tweet.findOne({ _id: request.params.id }).then(tweet => {
+    Tweet.findOne({ _id: request.params.id }).populate('user').then(tweet => {
       if (tweet != null) {
         reply(tweet);
       }
@@ -52,7 +52,7 @@ exports.findAllTweetsByUser = {
   },
 
   handler: function (request, reply) {
-    Tweet.find({ user: request.params.id }).then(tweets => {
+    Tweet.find({ user: request.params.id }).populate('user').then(tweets => {
       if (tweets != null) {
         reply(tweets);
       } else {
@@ -74,7 +74,7 @@ exports.findAllTweetsForUser = {
 
   handler: function (request, reply) {
 
-    User.findOne({ _id: request.params.id }).then(user => {
+    User.findOne({ _id: request.params.id }).populate('user').then(user => {
       Tweet.find({ $or: [{ user: user._id }, { user: { $in: user.follows } }] }).then(tweets => {
         if (tweets != null) {
           reply(tweets);
