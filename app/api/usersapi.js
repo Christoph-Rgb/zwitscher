@@ -169,14 +169,20 @@ exports.followUser = {
     const userToFollowID = request.params.id;
 
     User.findOne({ _id: loggedInUserID }).then(loggedInUser => {
-      loggedInUser.follows.push(userToFollowID);
-      loggedInUser.save().then(user => {
+      const indexToRemove = loggedInUser.follows.indexOf(userToFollowID);
+      if (indexToRemove === -1) {
+        loggedInUser.follows.push(userToFollowID);
+        loggedInUser.save().then(user => {
 
-        reply(user).code(201);
+          reply(user).code(201);
 
-      }).catch(err => {
+        }).catch(err => {
+          reply(Boom.notFound('user not updated'));
+        });
+      } else {
         reply(Boom.notFound('user not updated'));
-      });
+      }
+
     }).catch(err => {
       reply(Boom.notFound('user not found'));
     });
