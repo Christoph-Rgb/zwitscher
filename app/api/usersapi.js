@@ -214,3 +214,34 @@ exports.unfollowUser = {
     }).catch(err => { reply(Boom.notFound('user not found')); });
   },
 };
+
+exports.updateUser = {
+
+  auth: {
+    strategy: 'jwt',
+    scope: ['admin', 'user'],
+  },
+
+  handler: function (request, reply) {
+    const loggedInUserID = request.auth.credentials.id;
+    const updatedUser = request.payload;
+
+    User.findOne({ _id: loggedInUserID }).then(loggedInUser => {
+
+      if (loggedInUser.password === updatedUser.oldPassword) {
+        loggedInUser.firstName = updatedUser.firstName;
+        loggedInUser.lastName = updatedUser.lastName;
+        loggedInUser.email = updatedUser.email;
+        loggedInUser.gender = updatedUser.gender;
+        loggedInUser.password = updatedUser.password;
+
+        loggedInUser.save().then(savedUser => {
+          reply(savedUser).code(201);
+        });
+      } else {
+        reply(Boom.badData('supplied password incorrect'));
+      }
+
+    }).catch(err => { reply(Boom.notFound('user not found')); });
+  },
+};

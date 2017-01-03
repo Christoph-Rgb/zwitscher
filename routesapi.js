@@ -9,6 +9,7 @@ module.exports = [
   { method: 'POST', path: '/api/users/authenticate', config: UsersApi.authenticateUser },
   { method: 'POST', path: '/api/users/{id}/follow', config: UsersApi.followUser },
   { method: 'POST', path: '/api/users/{id}/unfollow', config: UsersApi.unfollowUser },
+  { method: 'POST', path: '/api/users/{id}/update', config: UsersApi.updateUser },
   { method: 'DELETE', path: '/api/users/{id}', config: UsersApi.deleteOneUser },
   { method: 'DELETE', path: '/api/users', config: UsersApi.deleteAllUsers },
 
