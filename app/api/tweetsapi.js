@@ -98,6 +98,10 @@ exports.postTweet = {
     scope: ['user', 'admin'],
   },
 
+  payload: {
+    maxBytes: 10000000,
+  },
+
   handler: function (request, reply) {
     const base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
     const userID = request.auth.credentials.id;
