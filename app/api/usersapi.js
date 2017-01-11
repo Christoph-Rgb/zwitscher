@@ -32,8 +32,8 @@ exports.findAllUsers = {
 
   handler: function (request, reply) {
     let allUsers = [];
-    let userCursor = User.find({}).cursor();
-    userCursor.eachAsync((user) => {
+    let userCursor = User.find({}).populate('follows').cursor();
+    userCursor.eachAsync(user => {
       return Tweet.count({ user: user._id }).then(userTweetCount => {
         let leanUser = user.toObject();
         leanUser.tweetCount = userTweetCount;
