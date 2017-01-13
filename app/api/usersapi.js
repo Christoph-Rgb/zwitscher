@@ -169,8 +169,8 @@ exports.followUser = {
     const userToFollowID = request.params.id;
 
     User.findOne({ _id: loggedInUserID }).then(loggedInUser => {
-      const indexToRemove = loggedInUser.follows.indexOf(userToFollowID);
-      if (indexToRemove === -1) {
+      const indexToFollow = loggedInUser.follows.indexOf(userToFollowID);
+      if (indexToFollow === -1) {
         loggedInUser.follows.push(userToFollowID);
         loggedInUser.save().then(user => {
 
@@ -180,7 +180,7 @@ exports.followUser = {
           reply(Boom.notFound('user not updated'));
         });
       } else {
-        reply(Boom.notFound('user not updated'));
+        reply(loggedInUser).code(201);
       }
 
     }).catch(err => {
@@ -210,6 +210,8 @@ exports.unfollowUser = {
           reply(user).code(201);
 
         }).catch(err => { reply(Boom.notFound('user not updated')); });
+      } else {
+        reply(loggedInUser).code(201);
       }
     }).catch(err => { reply(Boom.notFound('user not found')); });
   },
