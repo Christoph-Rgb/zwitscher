@@ -332,7 +332,7 @@ function getTweets(loggedInUserID, loggedInUserScope, searchOptions) {
             tweet.postedString = tweet.posted.toLocaleString('en-GB');
 
             //check if user is allowed delete this tweet
-            if (loggedInUserScope === 'admin' || tweet.user._id.equals(loggedInUserID)) {
+            if (loggedInUserScope === 'admin' || tweet.user === null || tweet.user._id.equals(loggedInUserID)) {
               tweet.canDelete = true;
             }
           });
