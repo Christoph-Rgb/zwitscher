@@ -45,4 +45,5 @@ DELETE /api/tweets/{id} = deletes specified tweet
 ### Jobs:
 
 POST /api/deleteTweetsJob/{tweetsToDelete} = deletes all specified tweets (JSON Array of Tweet IDs)
+
 POST /api/deleteUsersJob/{usersToDelete} = deletes all specified users (JSON Array of User IDs)
